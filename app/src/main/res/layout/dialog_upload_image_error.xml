@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_8_border"
+    android:layout_marginHorizontal="20dp">
+    <TextView
+        android:layout_margin="25dp"
+        android:id="@+id/tvUploadError"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/figtree_semi_bold"
+        android:text="@string/upload_image_error"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/icClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_marginEnd="15dp"
+        android:id="@+id/icClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        app:layout_constraintBottom_toBottomOf="@id/tvUploadError"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvUploadError" />
+
+    <TextView
+        android:layout_margin="25dp"
+        android:id="@+id/tvOop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/figtree_regular"
+        android:text="@string/oops_something_went_wrong_please_try_again"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUploadError" />
+
+
+    <TextView
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/bg_round_12"
+        android:backgroundTint="@color/color_00C40D"
+        android:id="@+id/tvTryAgain"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginVertical="16dp"
+        android:fontFamily="@font/figtree_semi_bold"
+        android:gravity="center"
+        android:text="@string/try_again"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvOop"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

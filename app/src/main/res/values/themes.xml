@@ -1,9 +1,27 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.DoingEditMediaFull" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.MyApplication" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.DoingEditMediaFull" parent="Base.Theme.DoingEditMediaFull" />
+    <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+
+    <style name="full_screen_dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppBottomSheetStyle</item>
+    </style>
+
+    <style name="AppBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item> <!-- QUAN TRỌNG -->
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+
+    // Theme : cấp độ window
+    // widget : cấp độ view/widget
+    // window.setBackgroundDrawable() > android:windowBackground > android:background nếu cùng viết vào source
 </resources>
