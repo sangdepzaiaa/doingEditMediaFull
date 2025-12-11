@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
@@ -21,35 +22,39 @@ import com.example.myapplication.ui.dialog.DialogCheckFaceId
 import com.example.myapplication.ui.dialog.DialogTypeChoosePhoto
 import com.example.myapplication.ui.permission.PermissionActivity
 import com.example.myapplication.utils.copyToCacheFile
+import com.example.myapplication.utils.tap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import kotlinx.coroutines.launch
 import java.io.File
-
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
     inflater = ActivityHomeBinding::inflate
 ) {
-    var tempFile : File?=null
-    val pickPhotoContent = registerForActivityResult(ActivityResultContracts.GetContent()){uri ->
+    private var isChoosingFacePhoto = true
+    var tempFile: File?=null
+
+    val pickPhotoContents = registerForActivityResult(ActivityResultContracts.GetContent()){uri ->
         uri?.let{ handleUri(it)}
     }
 
     val pickPhotoVisual = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri ->
-        uri?.let { handleUri(it) }
+        uri?.let { handleUri(it)}
     }
 
-    val launchCamera = registerForActivityResult(ActivityResultContracts.TakePicture()){success ->
+    val launchCamara = registerForActivityResult(ActivityResultContracts.TakePicture()){success ->
         if (success){
             tempFile?.let { checkFace(it) }
         }else{
             tempFile?.delete()
+            tempFile = null
         }
     }
 
     var photoBottomSheet : DialogTypeChoosePhoto?=null
 
-    fun showChooseTypePhoto(){
+    fun showChooseTypePhoto(forFace: Boolean = true){
+        isChoosingFacePhoto = forFace
         photoBottomSheet?.dismissAllowingStateLoss()
         photoBottomSheet = null
 
@@ -67,64 +72,65 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         })
 
         if (!isFinishing && !isDestroyed && supportFragmentManager.isStateSaved.not()){
-            photoBottomSheet?.show(supportFragmentManager,"DialogTypeChoosePhoto")
+            photoBottomSheet?.show(supportFragmentManager, "PhotoTypeBottomSheet")
         }
     }
+
     fun openGallery(){
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-           pickPhotoVisual.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-       }else{
-           pickPhotoContent.launch("image/*")
-       }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            pickPhotoVisual.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }else{
+            pickPhotoContents.launch("image/*")
+        }
     }
 
     fun hasPermissionCamera(): Boolean =
-        ContextCompat.checkSelfPermission(this@HomeActivity, Manifest.permission.CAMERA) ==
+        ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED
 
     fun openCamera(){
-       if (!hasPermissionCamera()){
-           Toast.makeText(this,R.string.permission_camera, Toast.LENGTH_SHORT).show()
-           startActivity(Intent(this, PermissionActivity::class.java))
-           return
-       }
-       takePhotoWithCamera()
+        if (!hasPermissionCamera()){
+            Toast.makeText(this, R.string.permission_camera, Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, PermissionActivity::class.java))
+            return
+        }
+        openCameraInternal()
     }
 
-    fun takePhotoWithCamera(){
+    fun openCameraInternal(){
         tempFile = File(cacheDir,"camera_${System.currentTimeMillis()}.jpg")
-        val uri = FileProvider.getUriForFile(this,"${BuildConfig.APPLICATION_ID}.provider",tempFile ?: return)
-        launchCamera.launch(uri)
+        val uri = FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}.provider",tempFile ?: return)
+        launchCamara.launch(uri)
     }
 
     fun handleUri(uri: Uri){
-        val file = uri.copyToCacheFile(this,"photo_${System.currentTimeMillis()}.jpg")
+        val file = uri.copyToCacheFile(this, "photo_${System.currentTimeMillis()}.jpg")
         file?.let { checkFace(it) }
     }
 
+
     fun checkFace(file: File) {
-        // file không thể null ở đây (do đã kiểm tra trước khi gọi), nhưng vẫn giữ an toàn
         if (!file.exists()) {
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
             return
         }
-
-//        // Hiển thị ảnh lên ImageView (chỉ gọi 1 lần duy nhất)
-//        binding.generateAiArts.imgPhoto.setImageURI(Uri.fromFile(file))
-
         // Kiểm tra khuôn mặt bằng ML Kit
         detectFaceInImage(file) { result ->
             lifecycleScope.launch {
                 when (result) {
                     // 1. OK → khuôn mặt chính diện, rõ ràng → đi tiếp
                     FaceDetectionResult.SingleGoodFace -> {
-                        val newUri = Uri.fromFile(file)
-//                        binding.generateAiArts.imgPhoto.setImageURI(newUri)
-//
-//                        // Cập nhật cả 2 (tương thích cũ + an toàn mới)
-//                        imageGallery = newUri.toString()          // giữ cho code cũ vẫn chạy
-//                        currentPhotoFile = file                   // bản backup chắc chắn nhất
-
+                        val targetImageView = if (isChoosingFacePhoto) {
+                            binding.imgPhoto
+                        } else {
+                            binding.imgYourStyle
+                        }
+                        // Dùng Glide cho chắc chắn + mượt
+                        Glide.with(this@HomeActivity)
+                            .load(file)
+                            .centerCrop()
+                            .placeholder(R.drawable.img_banner)
+                            .into(targetImageView)
                         Log.d("RECHOOSE", "Ảnh mới đã được chọn và lưu an toàn")
                     }
 
@@ -208,7 +214,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         super.onDestroy()
     }
 
-
+    override fun initView() {
+        super.initView()
+        binding.apply {
+            imgReChoosePhoto.tap { showChooseTypePhoto(forFace = true) }
+            imgReChoosePhoto2.tap { showChooseTypePhoto(forFace = false) }
+        }
+    }
 }
 
 //input: uri:  content://com.android.providers.media.documents/document/image%3A94821

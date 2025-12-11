@@ -1,37 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeActivity">
-    <ImageView
-        android:layout_margin="100dp"
-        android:id="@+id/img1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_camera"/>
-    <ImageView
-        android:layout_margin="100dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/img2"
-        app:layout_constraintTop_toTopOf="parent"
+    android:paddingTop="16dp"
+    android:paddingBottom="50dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvChoosePhoto"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_photo"/>
-    <Button
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_banner" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgReChoosePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_re_choose_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvYourStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnGenerate"
-        android:text="@string/app_name"
-        android:backgroundTint="@color/color_00C40D"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/your_style"
+        android:textColor="@color/color_808080"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mcvChoosePhoto" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcvYourStyle"
+        android:layout_width="200dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="100dp"
-        app:layout_constraintTop_toBottomOf="@+id/img1"
-        android:textColor="@color/white"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvYourStyle"
+        app:strokeColor="@android:color/transparent"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgYourStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_banner" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgReChoosePhoto2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_re_choose_photo"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btnGenerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/color_00C40D"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/mcvYourStyle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
