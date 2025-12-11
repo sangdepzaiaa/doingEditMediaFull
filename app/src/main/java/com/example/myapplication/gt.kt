@@ -1,8 +1,5 @@
 package com.example.myapplication
 
-import android.view.View
-import androidx.core.view.WindowInsetsCompat
-
 //@Suppress("DEPRECATION")
 //protected fun hideNavigationrBarLowerAndroid(){
 //    window.decorView.systemUiVisibility =

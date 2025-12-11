@@ -23,6 +23,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "doingEditMediaFull"
+rootProject.name = "myapplication"
 include(":app")
- 
+

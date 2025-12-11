@@ -1,14 +1,10 @@
 package com.example.myapplication.ui.home
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -16,24 +12,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.work.impl.utils.checkWakeLocks
+import com.example.myapplication.BuildConfig
+import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.data.enumm.FaceDetectionResult
+import com.example.myapplication.databinding.ActivityHomeBinding
 import com.example.myapplication.ui.dialog.DialogCheckFaceId
 import com.example.myapplication.ui.dialog.DialogTypeChoosePhoto
-import com.example.myapplication.ui.dialog.UploadErrorDialog
-import com.example.myapplication.ui.generate.GenerateActivity
 import com.example.myapplication.ui.permission.PermissionActivity
 import com.example.myapplication.utils.copyToCacheFile
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
-import com.xxx.faceswap.doingeditmediafull.BuildConfig
-import com.xxx.faceswap.doingeditmediafull.R
-import com.xxx.faceswap.doingeditmediafull.databinding.ActivityHomeBinding
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
     inflater = ActivityHomeBinding::inflate
@@ -219,6 +211,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
 
 }
 
+//input: uri:  content://com.android.providers.media.documents/document/image%3A94821
+// tempFile:  FF D8 FF E0 00 10 4A 46 49 46 00 01 ...
+// file được lưu ở :  data/user/0/com.yourapp/cache/temp_camera_photo.jpg
+// hểu sâu hơn: minh họa cụ thể pipeline từ bit → byte → pixel màu để bạn thấy rõ cách máy tính “dịch” dữ liệu
+// bit → byte → ByteBuffer trong ImageProxy → Chuyển YUV => RGB →  Bitmap → JPEG(.jpg: FF D8 FF E0 00 10 4A 46 49 46 00 01 ...) : ảnh chụp camera phổ biến -> Uri
+//PNG (.png) 89 50 4E 47 0D 0A 1A 0A
+//BMP (.bmp) 42 4D ...
+// GIF (.gif) 47 49 46 38 39 61
+// các dạng khác cũng bắt ầu bằng 2 số
+//bit → byte → buffer → ImageProxy → file → URI.
+//
 
 //registerForActivityResult : đăng ký một trình khởi chạy(launch) để nhận kết quả từ một hoạt động .
 //ActivityResultContracts : hợp động để dùng các dịch cụ của registerForActivityResult

@@ -6,12 +6,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
-import com.xxx.faceswap.doingeditmediafull.R
+import com.example.myapplication.R
+
 
 
 abstract class BaseDialog<VB : ViewBinding>(

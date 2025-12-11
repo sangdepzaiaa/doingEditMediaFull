@@ -1,22 +1,15 @@
 package com.example.myapplication.ui.splash
 
 import android.content.Intent
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+
 import androidx.lifecycle.lifecycleScope
+import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
+import com.example.myapplication.databinding.ActivitySplashBinding
 import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.ui.permission.PermissionActivity
 import com.example.myapplication.utils.SharePreUtils
 import com.example.myapplication.utils.const
-import com.xxx.faceswap.doingeditmediafull.R
-import com.xxx.faceswap.doingeditmediafull.databinding.ActivitySplashBinding
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

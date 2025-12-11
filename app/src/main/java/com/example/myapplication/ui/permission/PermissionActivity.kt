@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
@@ -13,11 +12,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
+import com.example.myapplication.databinding.ActivityPermissionBinding
 import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.utils.tap
-import com.xxx.faceswap.doingeditmediafull.R
-import com.xxx.faceswap.doingeditmediafull.databinding.ActivityPermissionBinding
+
 
 class PermissionActivity: BaseActivity<ActivityPermissionBinding>(
     inflater = ActivityPermissionBinding::inflate

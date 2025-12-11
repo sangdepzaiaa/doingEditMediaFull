@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.xxx.faceswap.doingeditmediafull"
+    namespace = "com.example.myapplication"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.xxx.faceswap.doingeditmediafull"
+        applicationId = "com.example.myapplication"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

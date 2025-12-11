@@ -4,9 +4,9 @@ import android.content.Intent
 import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.utils.tap
 import android.provider.Settings
+import com.example.myapplication.databinding.ActivityNoInternetBinding
 import com.example.myapplication.ui.splash.SplashActivity
 import com.example.myapplication.utils.CheckInternet
-import com.xxx.faceswap.doingeditmediafull.databinding.ActivityNoInternetBinding
 
 
 class NoInternetActivity: BaseActivity<ActivityNoInternetBinding>(
