@@ -3,9 +3,12 @@ package com.example.myapplication.ui.home
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,12 +29,18 @@ import com.example.myapplication.utils.tap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
     inflater = ActivityHomeBinding::inflate
 ) {
     private var isChoosingFacePhoto = true
+    private var currentFaceFile: File? = null   // Ảnh khuôn mặt (từ imgPhoto)
+    private var currentStyleFile: File? = null  // Ảnh style (từ imgYourStyle)
     var tempFile: File?=null
 
     val pickPhotoContents = registerForActivityResult(ActivityResultContracts.GetContent()){uri ->
@@ -120,18 +129,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
                 when (result) {
                     // 1. OK → khuôn mặt chính diện, rõ ràng → đi tiếp
                     FaceDetectionResult.SingleGoodFace -> {
-                        val targetImageView = if (isChoosingFacePhoto) {
-                            binding.imgPhoto
-                        } else {
-                            binding.imgYourStyle
-                        }
-                        // Dùng Glide cho chắc chắn + mượt
-                        Glide.with(this@HomeActivity)
-                            .load(file)
-                            .centerCrop()
-                            .placeholder(R.drawable.img_banner)
-                            .into(targetImageView)
-                        Log.d("RECHOOSE", "Ảnh mới đã được chọn và lưu an toàn")
+                        updateImageAndFile(file)
                     }
 
                     FaceDetectionResult.NoFace -> {
@@ -162,15 +160,33 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         }
     }
 
+    private fun updateImageAndFile(file: File) {
+        val targetImageView = if (isChoosingFacePhoto) binding.imgPhoto else binding.imgYourStyle
+
+        Glide.with(this)
+            .load(file)
+            .centerCrop()
+            .placeholder(R.drawable.img_banner)
+            .into(targetImageView)
+
+        if (isChoosingFacePhoto) {
+            currentFaceFile = file
+        } else {
+            currentStyleFile = file
+        }
+
+        Toast.makeText(this, "Ảnh đã được chọn thành công!", Toast.LENGTH_SHORT).show()
+    }
+
     private fun detectFaceInImage(file: File, onResult: (FaceDetectionResult) -> Unit) {
         val image = InputImage.fromFilePath(this, Uri.fromFile(file))
 
         val detector = FaceDetection.getClient(
             FaceDetectorOptions.Builder()
-                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
                 .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_NONE)
                 .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
-                .setMinFaceSize(0.15f)
+                .setMinFaceSize(0.1f)
                 .build()
         )
 
@@ -192,10 +208,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
                         val headEulerZ = face.headEulerAngleZ // góc nghiêng đầu
 
                         // Điều kiện "chính diện, rõ ràng"
-                        val isFrontal = kotlin.math.abs(headEulerY) < 20 && kotlin.math.abs(headEulerZ) < 20
-                        val isEyesOpen = (leftEyeOpen > 0.5f && rightEyeOpen > 0.5f)
+                        val isFrontal = kotlin.math.abs(headEulerY) < 35f && kotlin.math.abs(headEulerZ) < 30f
+                      //  val isEyesOpen = (leftEyeOpen > 0.5f && rightEyeOpen > 0.5f)
 
-                        if (isFrontal && isEyesOpen) {
+                        if (isFrontal ) {
                             onResult(FaceDetectionResult.SingleGoodFace)
                         } else {
                             onResult(FaceDetectionResult.Error)
@@ -208,9 +224,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
             }
     }
 
+
+
     override fun onDestroy() {
         photoBottomSheet?.dismissAllowingStateLoss()
         photoBottomSheet = null
+        tempFile?.delete()
+        currentFaceFile?.delete()
+        currentStyleFile?.delete()
         super.onDestroy()
     }
 
@@ -219,13 +240,48 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         binding.apply {
             imgReChoosePhoto.tap { showChooseTypePhoto(forFace = true) }
             imgReChoosePhoto2.tap { showChooseTypePhoto(forFace = false) }
+            btnGenerateAiArts.root.tap {
+                delayBtnGenerate()
+                setUiButton(false)
+            }
         }
+    }
+
+    private fun setEnabledAiPhoto(isEnabled: Boolean) {
+        if (isEnabled) {
+            // Trạng thái bình thường: sáng, có thể bấm, không loading
+            binding.btnGenerateAiArts.clGenerate.visibility = View.VISIBLE
+            binding.btnGenerateAiArts.clLoading.visibility = View.GONE
+
+            binding.btnGenerateAiArts.root.isEnabled = true
+            binding.btnGenerateAiArts.root.alpha = 1f
+        } else {
+            // Đang xử lý: mờ + hiện loading
+            binding.btnGenerateAiArts.clGenerate.visibility = View.GONE
+            binding.btnGenerateAiArts.clLoading.visibility = View.VISIBLE
+
+            binding.btnGenerateAiArts.root.isEnabled = false
+            binding.btnGenerateAiArts.root.alpha = 0.5f
+        }
+    }
+
+    private fun delayBtnGenerate() {
+        binding.btnGenerateAiArts.root.alpha = 0.5f
+        binding.btnGenerateAiArts.root.isEnabled = false
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(2000)
+            binding.btnGenerateAiArts.root.alpha = 1f
+            binding.btnGenerateAiArts.root.isEnabled = true
+        }
+    }
+    private fun setUiButton(isEnabled: Boolean) {
+        setEnabledAiPhoto(isEnabled)
     }
 }
 
 //input: uri:  content://com.android.providers.media.documents/document/image%3A94821
 // tempFile:  FF D8 FF E0 00 10 4A 46 49 46 00 01 ...
-// file được lưu ở :  data/user/0/com.yourapp/cache/temp_camera_photo.jpg
+// file được lưu ở :  data/user/0/com.yourapp/cache/temp_chamera_photo.jpg
 // hểu sâu hơn: minh họa cụ thể pipeline từ bit → byte → pixel màu để bạn thấy rõ cách máy tính “dịch” dữ liệu
 // bit → byte → ByteBuffer trong ImageProxy → Chuyển YUV => RGB →  Bitmap → JPEG(.jpg: FF D8 FF E0 00 10 4A 46 49 46 00 01 ...) : ảnh chụp camera phổ biến -> Uri
 //PNG (.png) 89 50 4E 47 0D 0A 1A 0A

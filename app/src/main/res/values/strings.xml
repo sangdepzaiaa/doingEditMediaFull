@@ -35,5 +35,6 @@
     <string name="try_again">Try Again</string>
     <string name="choose_another_photo">choose another photo</string>
     <string name="your_style">Chọn 2 ảnh để hoán đổi khuôn mặt </string>
+    <string name="generate">Generate</string>
 
 </resources>

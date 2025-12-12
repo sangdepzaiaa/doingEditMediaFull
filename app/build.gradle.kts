@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.resolve.calls.model.ResolvedCallArgument.DefaultArgument.arguments
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -20,6 +22,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -45,6 +48,7 @@ android {
         viewBinding = true
         buildConfig = true
     }
+
 
 //    // variant dev , product
 //
@@ -152,4 +156,5 @@ dependencies {
     implementation("com.google.mlkit:face-detection:16.1.7")
 
     implementation("com.google.code.gson:gson:2.13.2")
+
 }
