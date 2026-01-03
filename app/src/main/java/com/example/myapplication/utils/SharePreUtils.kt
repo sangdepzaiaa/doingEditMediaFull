@@ -2,26 +2,27 @@ package com.example.myapplication.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 
-object SharePreUtils{
-    private val PREFS_APP = "prefs_app"
-    private var sharePrefs : SharedPreferences?=null
+object SharePreUtils {
+    private const val PREFS = "PREFS"
 
-    fun prefs(context: Context) : SharedPreferences =
-        sharePrefs ?: context.applicationContext.getSharedPreferences(
-            PREFS_APP, Context.MODE_PRIVATE
-        ).also { sharePrefs = it }
+    fun pref(context: Context): SharedPreferences{
+        return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+    }
 
+    fun getBoolean(context: Context,key: String ="", value: Boolean = false): Boolean{
+        return pref(context).getBoolean(key,value)
+    }
 
-    fun getBoolean(context: Context,key:String = "",value:Boolean = false): Boolean =
-        prefs(context).getBoolean(key,value)
-
-    fun setBoolean(context: Context,key: String= "", value: Boolean = false) =
-        prefs(context).edit().putBoolean(key,value).apply()
-
+    fun setBoolean(context: Context,key: String="",value: Boolean= false): Boolean{
+        return pref(context).edit().putBoolean(key,value).commit()
+    }
 }
-
 // also nhận 1 đối tượng SharedPreferences là it , gán vào sharePrefs
+//apply() KHÔNG trả về Boolean
+//apply() trả về Unit
+//commit() trả về Boolean
 // hàm prefs trả về 1 đối tượng SharedPreferences, nên gọi được getBoolean và edit(),
 // có edit( gọi được putBoolean và apply())
 //applicationContext khi bạn cần context “toàn cục”, không gắn với UI.

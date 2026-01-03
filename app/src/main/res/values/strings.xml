@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">My Application</string>
 
-    <string name="text_splash_1">loading resource...</string>
-    <string name="text_splash_2">download image...</string>
-    <string name="text_splash_3">handle error...</string>
-    <string name="text_splash_4">update version...</string>
+    <string name="text_splash_1">loading resource</string>
+    <string name="text_splash_2">download image</string>
+    <string name="text_splash_3">handle error</string>
+    <string name="text_splash_4">update version</string>
     <string name="no_internet">No Internet</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="please_check_your_internet_connection_and_try_again">Please check your internet connection and try again.</string>

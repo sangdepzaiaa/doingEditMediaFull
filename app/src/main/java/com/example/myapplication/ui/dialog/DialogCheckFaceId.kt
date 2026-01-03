@@ -3,10 +3,11 @@ package com.example.myapplication.ui.dialog
 import android.content.DialogInterface
 import android.view.View
 import com.example.myapplication.base.BaseBottomSheet
+import com.example.myapplication.databinding.DialogCheckFaceIdBinding
 import com.example.myapplication.utils.tap
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.xxx.faceswap.doingeditmediafull.databinding.DialogCheckFaceIdBinding
+
 
 class DialogCheckFaceId(
     private val content: String? = null,

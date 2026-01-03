@@ -1,165 +1,170 @@
 package com.example.myapplication.ui.permission
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
+import com.example.myapplication.databinding.ActivityPermissionBinding
 import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.utils.tap
-import com.xxx.faceswap.doingeditmediafull.R
-import com.xxx.faceswap.doingeditmediafull.databinding.ActivityPermissionBinding
+import io.ktor.client.plugins.UserAgent
 
-class PermissionActivity: BaseActivity<ActivityPermissionBinding>(
+class PermissionActivity : BaseActivity<ActivityPermissionBinding>(
     inflater = ActivityPermissionBinding::inflate
-){
-    val launchCamera = registerForActivityResult(
+) {
+    val laucher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        updatePermissionStatus()
-        updateDoneBotton()
+        setSwitchState(binding.swCamera,hasPermission())
+        updateText()
         if (isGranted) {
             Toast.makeText(this, R.string.grant_permission_camera, Toast.LENGTH_SHORT).show()
         } else {
             if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
-                showPermissionDialog()
+                showDetailDialog()
             } else {
-                showGotoSettingsDialog()
+                showSettingDialog()
             }
         }
     }
 
-    fun showPermissionDialog(){
-        AlertDialog.Builder(this)
-            .setTitle(R.string.permission)
-            .setMessage(R.string.permission_camera_explanation)
-            .setCancelable(true)
-            .setPositiveButton(R.string.grant_permission){_,_->
-            launchCamera.launch(Manifest.permission.CAMERA)
-            }
-            .setNegativeButton(R.string.cancel,null)
-            .show()
+    fun showDetailDialog() {
+        AlertDialog.Builder(this).setTitle(R.string.permission)
+            .setMessage(R.string.grant_permission).setCancelable(true)
+            .setPositiveButton(R.string.grant_permission) { _, _ ->
+                laucher.launch(Manifest.permission.CAMERA)
+            }.setNegativeButton(R.string.cancel) { dia, _ ->
+                dia.dismiss()
+            }.show()
     }
 
-    fun showGotoSettingsDialog(){
-        AlertDialog.Builder(this)
-            .setTitle(R.string.permission)
-            .setMessage(R.string.permission_camera_message)
-            .setCancelable(true)
-            .setPositiveButton(R.string.grant_permission){_,_->
-                goToSeting()
-            }
-            .setNegativeButton(R.string.cancel,null)
-            .show()
+    fun showSettingDialog() {
+        AlertDialog.Builder(this).setTitle(R.string.permission).setTitle(R.string.grant_permission)
+            .setCancelable(true).setPositiveButton(R.string.grant_permission) { _, _ ->
+                showDetailSetting()
+            }.setNegativeButton(R.string.cancel) { dia, _ ->
+                dia.dismiss()
+            }.show()
     }
 
-    fun goToSeting(){
+    fun showDetailSetting() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package",packageName,null)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            data = Uri.fromParts("package", packageName, null)
             addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         }
         try {
             startActivity(intent)
-        }catch (e: Exception){
-            val intent = Intent(Settings.ACTION_APPLICATION_SETTINGS).apply {
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-                addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-            }
-            startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            startActivity(
+                Intent(Settings.ACTION_APPLICATION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    .addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+            )
         }
+
     }
 
-    fun hasPermissionCamera(): Boolean =
-        ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
+    fun hasPermission(): Boolean =
+        ContextCompat
+            .checkSelfPermission(this@PermissionActivity, Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED
 
-    fun requestPermissionCamera(){
-        if (hasPermissionCamera()){
-            updatePermissionStatus()
-            updateDoneBotton()
+    fun requestPermission() {
+        if (hasPermission()){
+            setSwitchState(binding.swCamera,hasPermission())
+            updateText()
+            return
         }
-        launchCamera.launch(Manifest.permission.CAMERA)
+        laucher.launch(Manifest.permission.CAMERA)
     }
 
     override fun initView() {
         super.initView()
-        if (hasPermissionCamera()){
-            navigateToHome()
+        if (hasPermission()){
+            negativeHome()
             return
         }
 
-        setClick()
-        updatePermissionStatus()
-        updateDoneBotton()
-
+        setSwitchState(binding.swCamera,hasPermission())
+        updateText()
+        setOnClick()
     }
 
-    fun updatePermissionStatus(){
-        updateSwitch(binding.swCamera,hasPermissionCamera())
-    }
-
-    fun updateSwitch(switchCompat: SwitchCompat,isGranted: Boolean){
-        switchCompat.isEnabled = isGranted
-
-        if (isGranted){
-            val thumOn = ContextCompat.getColor(this,R.color.color_00C40D)
-            val trackOn = ContextCompat.getColor(this, R.color.white)
-
-            switchCompat.thumbTintList = ColorStateList.valueOf(thumOn)
-            switchCompat.trackTintList = ColorStateList.valueOf(trackOn)
-            switchCompat.isEnabled = false
-        }else{
-            switchCompat.isEnabled = true
-            val thumbOff = ContextCompat.getColor(this,R.color.black)
-            val trackOff = ContextCompat.getColor(this, R.color.white)
-
-            switchCompat.thumbTintList = ColorStateList.valueOf(thumbOff)
-            switchCompat.trackTintList = ColorStateList.valueOf(trackOff)
-        }
-    }
-
-    fun updateDoneBotton(){
-        val isGranted = hasPermissionCamera()
-        binding.icDone.isVisible = isGranted
-        binding.tvConfirm.text = if(isGranted){
-            getString(R.string.continue_n)
-        }else{
-            getString(R.string.continue_without_permission)
-        }
-    }
-
-    fun navigateToHome(){
-        startActivity(Intent(this,HomeActivity::class.java))
+    fun negativeHome(){
+        startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
 
-    fun setClick(){
+    fun setOnClick(){
         binding.apply {
-            tvCamera.tap { requestPermissionCamera() }
-            swCamera.tap { requestPermissionCamera() }
-            tvConfirm.tap { navigateToHome() }
-            icDone.tap { navigateToHome() }
+            icDone.tap { negativeHome() }
+            tvConfirm.tap { negativeHome() }
+            tvCamera.tap { requestPermission() }
+            swCamera.tap { requestPermission() }
+        }
+    }
+
+    fun setSwitchState(switchCompat: SwitchCompat,  isGranteded: Boolean){
+        switchCompat.isEnabled = isGranteded
+
+        if (isGranteded){
+            val thumbOn = ContextCompat.getColor(this@PermissionActivity,R.color.color_00C40D)
+            val trackOn = ContextCompat.getColor(this@PermissionActivity,R.color.color_000000_7)
+
+            binding.swCamera.thumbTintList = ColorStateList.valueOf(thumbOn)
+            binding.swCamera.trackTintList = ColorStateList.valueOf(trackOn)
+            binding.swCamera.isEnabled = false
+        }else{
+            binding.swCamera.isEnabled = true
+            val thumbOff = ContextCompat.getColor(this@PermissionActivity,R.color.color_1B1B1B_7)
+            val trackOff = ContextCompat.getColor(this@PermissionActivity,R.color.color_000000_7)
+
+            binding.swCamera.trackTintList = ColorStateList.valueOf(trackOff)
+            binding.swCamera.thumbTintList = ColorStateList.valueOf(thumbOff)
+
+        }
+
+    }
+
+
+    fun updateText() {
+        val isGrant = hasPermission()
+        binding.icDone.visibility  = if (isGrant) {
+            android.view.View.VISIBLE
+        } else {
+            android.view.View.INVISIBLE
+        }
+        binding.tvConfirm.apply {
+            if (isGrant) {
+                text = getString(R.string.continue_n)
+            }else{
+                text = getString(R.string.continue_without_permission)
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        updatePermissionStatus()
-        updateDoneBotton()
+        updateText()
+        setSwitchState(binding.swCamera,hasPermission())
     }
 }
+
 
 // registerForActivityResult( // đăng ký launch yêu cầu quyền
 //        ActivityResultContracts.RequestPermission() // yêu cầu 1 quyền

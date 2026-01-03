@@ -8,22 +8,21 @@ import android.view.WindowManager
 import android.widget.PopupWindow
 import androidx.viewbinding.ViewBinding
 
-abstract class BasePopupWindow<VB : ViewBinding>(
+abstract class BasePopupWindow<VB: ViewBinding>(
     context: Context,
-    val inflater: (LayoutInflater) -> VB,
-    var heightScreen: Int = WindowManager.LayoutParams.WRAP_CONTENT,
-    var widthScreen:Int = WindowManager.LayoutParams.WRAP_CONTENT
+    inflater: (LayoutInflater) -> VB,
+    wid :Int = WindowManager.LayoutParams.WRAP_CONTENT,
+    hei : Int = WindowManager.LayoutParams.WRAP_CONTENT
 ): PopupWindow(context){
-
-    protected val binding:VB by lazy { inflater(LayoutInflater.from(context)) }
-
+    protected val binding by lazy { inflater(LayoutInflater.from(context)) }
     init {
         contentView = binding.root
+        width = wid
+        height = hei
         isFocusable = true
         isOutsideTouchable = true
-        this.height = heightScreen
-        this.width = widthScreen
         setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        isTouchable = true
         initView()
         bindView()
     }

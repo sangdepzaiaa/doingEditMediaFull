@@ -2,10 +2,11 @@ package com.example.myapplication.ui.dialog
 
 import android.view.View
 import com.example.myapplication.base.BaseBottomSheet
+import com.example.myapplication.databinding.DialogChoosePhotoBinding
 import com.example.myapplication.utils.tap
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.xxx.faceswap.doingeditmediafull.databinding.DialogChoosePhotoBinding
+
 
 class DialogTypeChoosePhoto(
     private val selectedListener: OnSelectedListener? = null

@@ -1,70 +1,86 @@
 package com.example.myapplication.ui.home
 
+
 import android.Manifest
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.work.impl.utils.checkWakeLocks
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.BuildConfig
+import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.data.enumm.FaceDetectionResult
+import com.example.myapplication.data.remote.RetrofitClient
+import com.example.myapplication.databinding.ActivityHomeBinding
 import com.example.myapplication.ui.dialog.DialogCheckFaceId
 import com.example.myapplication.ui.dialog.DialogTypeChoosePhoto
-import com.example.myapplication.ui.dialog.UploadErrorDialog
-import com.example.myapplication.ui.generate.GenerateActivity
 import com.example.myapplication.ui.permission.PermissionActivity
 import com.example.myapplication.utils.copyToCacheFile
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
-import com.xxx.faceswap.doingeditmediafull.BuildConfig
-import com.xxx.faceswap.doingeditmediafull.R
-import com.xxx.faceswap.doingeditmediafull.databinding.ActivityHomeBinding
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.FileOutputStream
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
     inflater = ActivityHomeBinding::inflate
 ) {
-    var tempFile : File?=null
-    val pickPhotoContent = registerForActivityResult(ActivityResultContracts.GetContent()){uri ->
-        uri?.let{ handleUri(it)}
-    }
+    var tempFile: File? = null
+    var currentPhoto: File? = null
+    var currentPhoto2: File? = null
+    private lateinit var adapter: ImageAdapter
+    private var currentImageId: String? = null
 
-    val pickPhotoVisual = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){uri ->
+    private var selectedImageUri: Uri? = null
+
+    val pickContent = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
         uri?.let { handleUri(it) }
     }
 
-    val launchCamera = registerForActivityResult(ActivityResultContracts.TakePicture()){success ->
-        if (success){
+    val pickVisual = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        uri?.let { handleUri(it) }
+    }
+
+    val takePhoto = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
             tempFile?.let { checkFace(it) }
-        }else{
+        } else {
             tempFile?.delete()
+            tempFile = null
         }
     }
 
-    var photoBottomSheet : DialogTypeChoosePhoto?=null
-
-    fun showChooseTypePhoto(){
+    var isChooseTypePhoto = true
+    var photoBottomSheet: DialogTypeChoosePhoto? = null
+    fun showChooseTypePhoto() {
         photoBottomSheet?.dismissAllowingStateLoss()
         photoBottomSheet = null
 
-        photoBottomSheet = DialogTypeChoosePhoto(object : DialogTypeChoosePhoto.OnSelectedListener{
+        photoBottomSheet = DialogTypeChoosePhoto(object : DialogTypeChoosePhoto.OnSelectedListener {
             override fun onPhotoSelected() {
                 photoBottomSheet = null
-                openGallery()
+                openPickPhoto()
             }
 
             override fun onCameraSelected() {
@@ -74,39 +90,41 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
 
         })
 
-        if (!isFinishing && !isDestroyed && supportFragmentManager.isStateSaved.not()){
-            photoBottomSheet?.show(supportFragmentManager,"DialogTypeChoosePhoto")
+        if (!isDestroyed && !isFinishing && supportFragmentManager.isStateSaved.not()) {
+            photoBottomSheet?.show(supportFragmentManager, "ChoosePhotoDialog")
         }
     }
-    fun openGallery(){
-       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-           pickPhotoVisual.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-       }else{
-           pickPhotoContent.launch("image/*")
-       }
+
+    fun openPickPhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            pickVisual.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        } else {
+            pickContent.launch("image/*")
+        }
     }
 
-    fun hasPermissionCamera(): Boolean =
+    fun hasPermission(): Boolean =
         ContextCompat.checkSelfPermission(this@HomeActivity, Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED
 
-    fun openCamera(){
-       if (!hasPermissionCamera()){
-           Toast.makeText(this,R.string.permission_camera, Toast.LENGTH_SHORT).show()
-           startActivity(Intent(this, PermissionActivity::class.java))
-           return
-       }
-       takePhotoWithCamera()
+    fun openCamera() {
+        if (!hasPermission()) {
+            startActivity(Intent(this, PermissionActivity::class.java))
+            return
+        }
+        openCameraInternal()
     }
 
-    fun takePhotoWithCamera(){
-        tempFile = File(cacheDir,"camera_${System.currentTimeMillis()}.jpg")
-        val uri = FileProvider.getUriForFile(this,"${BuildConfig.APPLICATION_ID}.provider",tempFile ?: return)
-        launchCamera.launch(uri)
+    fun openCameraInternal() {
+        tempFile = File(cacheDir, "camera_${System.currentTimeMillis()}.jpg")
+        val uri =
+            FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}", tempFile ?: return)
+        takePhoto
     }
 
-    fun handleUri(uri: Uri){
-        val file = uri.copyToCacheFile(this,"photo_${System.currentTimeMillis()}.jpg")
+    fun handleUri(uri: Uri) {
+        var file =
+            uri.copyToCacheFile(this@HomeActivity, "picked_photo_${System.currentTimeMillis()}.jpg")
         file?.let { checkFace(it) }
     }
 
@@ -126,14 +144,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
                 when (result) {
                     // 1. OK → khuôn mặt chính diện, rõ ràng → đi tiếp
                     FaceDetectionResult.SingleGoodFace -> {
-                        val newUri = Uri.fromFile(file)
-//                        binding.generateAiArts.imgPhoto.setImageURI(newUri)
-//
-//                        // Cập nhật cả 2 (tương thích cũ + an toàn mới)
-//                        imageGallery = newUri.toString()          // giữ cho code cũ vẫn chạy
-//                        currentPhotoFile = file                   // bản backup chắc chắn nhất
-
-                        Log.d("RECHOOSE", "Ảnh mới đã được chọn và lưu an toàn")
+                        //updateImageAndFile(file)
                     }
 
                     FaceDetectionResult.NoFace -> {
@@ -164,15 +175,33 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         }
     }
 
+//    fun  updateImageAndFile(file: File){
+//        val targetImageView = if (isChooseTypePhoto) binding.imgPhoto else binding.imgYourStyle
+//
+//        Glide.with(this)
+//            .load(file)
+//            .centerCrop()
+//            .placeholder(R.drawable.img_banner)
+//            .into(targetImageView)
+//
+//        if (isChooseTypePhoto) {
+//            currentPhoto = file
+//        } else {
+//            currentPhoto2 = file
+//        }
+//
+//        Toast.makeText(this, "Ảnh đã được chọn thành công!", Toast.LENGTH_SHORT).show()
+//    }
+
     private fun detectFaceInImage(file: File, onResult: (FaceDetectionResult) -> Unit) {
         val image = InputImage.fromFilePath(this, Uri.fromFile(file))
 
         val detector = FaceDetection.getClient(
             FaceDetectorOptions.Builder()
-                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_FAST)
+                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
                 .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_NONE)
                 .setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
-                .setMinFaceSize(0.15f)
+                .setMinFaceSize(0.05f)
                 .build()
         )
 
@@ -182,9 +211,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
                     faces.isEmpty() -> {
                         onResult(FaceDetectionResult.NoFace)
                     }
+
                     faces.size > 1 -> {
                         onResult(FaceDetectionResult.MultipleFaces)
                     }
+
                     else -> {
                         val face = faces[0]
                         val smileProb = face.smilingProbability ?: 0f
@@ -194,10 +225,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
                         val headEulerZ = face.headEulerAngleZ // góc nghiêng đầu
 
                         // Điều kiện "chính diện, rõ ràng"
-                        val isFrontal = kotlin.math.abs(headEulerY) < 20 && kotlin.math.abs(headEulerZ) < 20
+                        val isFrontal =
+                            kotlin.math.abs(headEulerY) < 35 && kotlin.math.abs(headEulerZ) < 35
                         val isEyesOpen = (leftEyeOpen > 0.5f && rightEyeOpen > 0.5f)
 
-                        if (isFrontal && isEyesOpen) {
+                        if (isFrontal) {
                             onResult(FaceDetectionResult.SingleGoodFace)
                         } else {
                             onResult(FaceDetectionResult.Error)
@@ -213,11 +245,112 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
     override fun onDestroy() {
         photoBottomSheet?.dismissAllowingStateLoss()
         photoBottomSheet = null
+        tempFile?.delete()
+        currentPhoto?.delete()
+        currentPhoto2?.delete()
         super.onDestroy()
     }
 
+    override fun initView() {
+        super.initView()
+        setupRecyclerView()
+        loadDataFromServer() // Bước 1: GET dữ liệu lên RecyclerView
 
+        // Sự kiện chọn ảnh từ thư viện
+        binding.btnSelectImage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            pickImageLauncher.launch(intent)
+        }
+
+        // Sự kiện POST dữ liệu lên server
+        binding.btnUpload.setOnClickListener {
+            uploadDataToServer()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        adapter = ImageAdapter(emptyList()) { item ->
+            Toast.makeText(this, "Bạn chọn: ${item.title}", Toast.LENGTH_SHORT).show()
+        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
+    }
+
+    // --- PHẦN 1: GET DỮ LIỆU ---
+    private fun loadDataFromServer() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.getListItems()
+                adapter.updateData(response)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@HomeActivity, "Lỗi GET: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // --- PHẦN 2: POST DỮ LIỆU ---
+    private fun uploadDataToServer() {
+        val uri = selectedImageUri ?: return
+        if (uri == null) {
+            Toast.makeText(this, "Vui lòng chọn ảnh trước!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Lấy text từ EditText (Giả sử bạn có 2 ô nhập liệu này)
+        val title = binding.edtTitle.text.toString()
+        val desc = binding.edtDescription.text.toString()
+
+        lifecycleScope.launch {
+            try {
+                // Chuyển Uri thành File để gửi
+                val file = uriToFile(uri)
+                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                val imagePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+                val titlePart = title.toRequestBody("text/plain".toMediaTypeOrNull())
+                val descPart = desc.toRequestBody("text/plain".toMediaTypeOrNull())
+
+                // Gọi API POST
+                val responseBody = RetrofitClient.instance.
+                uploadData(titlePart, descPart, imagePart)
+
+                // Nhận lại ảnh đã chỉnh sửa từ server và hiển thị lên ImageView
+                val bitmap = BitmapFactory.decodeStream(responseBody.byteStream())
+                binding.imgResult.setImageBitmap(bitmap)
+
+                Toast.makeText(this@HomeActivity, "Upload & Nhận ảnh thành công!", Toast.LENGTH_SHORT).show()
+
+                // Load lại danh sách RecyclerView để cập nhật ảnh mới
+                loadDataFromServer()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@HomeActivity, "Lỗi POST: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    // Launcher để lấy kết quả chọn ảnh
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            selectedImageUri = result.data?.data
+            binding.imgPreview.setImageURI(selectedImageUri) // Hiển thị ảnh vừa chọn để xem trước
+        }
+    }
+
+    // Hàm phụ trợ chuyển Uri sang File (bắt buộc để gửi Multipart)
+    private fun uriToFile(uri: Uri): File {
+        val inputStream = contentResolver.openInputStream(uri)
+        val file = File(cacheDir, "temp_image.jpg")
+        val outputStream = FileOutputStream(file)
+        inputStream?.copyTo(outputStream)
+        return file
+    }
 }
+
+
+
 
 
 //registerForActivityResult : đăng ký một trình khởi chạy(launch) để nhận kết quả từ một hoạt động .

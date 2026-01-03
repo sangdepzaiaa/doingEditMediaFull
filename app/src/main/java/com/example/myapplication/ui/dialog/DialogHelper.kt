@@ -2,8 +2,9 @@ package com.example.myapplication.ui.dialog
 
 import android.content.Context
 import com.example.myapplication.base.BaseDialog
+import com.example.myapplication.databinding.DialogUploadImageErrorBinding
 import com.example.myapplication.utils.tap
-import com.xxx.faceswap.doingeditmediafull.databinding.DialogUploadImageErrorBinding
+
 
 class UploadErrorDialog(
     context: Context,
