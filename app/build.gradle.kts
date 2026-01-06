@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.myapplication"
-        minSdk = 24
+        minSdk = 29
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -24,8 +24,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            // Tắt làm rối mã nguồn và tối ưu tài nguyên để tránh lỗi khởi tạo ViewModel
+            isMinifyEnabled = false
+            // Giữ nguyên phần signing và proguard (vì khi false nó sẽ không chạy)
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -152,4 +153,6 @@ dependencies {
     implementation("com.google.mlkit:face-detection:16.1.7")
 
     implementation("com.google.code.gson:gson:2.13.2")
+
+
 }

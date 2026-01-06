@@ -12,11 +12,13 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.BuildConfig
+
 import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.data.enumm.FaceDetectionResult
@@ -47,6 +49,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
     private var currentImageId: String? = null
 
     private var selectedImageUri: Uri? = null
+
+    private val viewModel: ImageViewModel by viewModels()
 
     val pickContent = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -254,7 +258,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
     override fun initView() {
         super.initView()
         setupRecyclerView()
-        loadDataFromServer() // Bước 1: GET dữ liệu lên RecyclerView
+        setupObservers()
 
         // Sự kiện chọn ảnh từ thư viện
         binding.btnSelectImage.setOnClickListener {
@@ -264,72 +268,35 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
 
         // Sự kiện POST dữ liệu lên server
         binding.btnUpload.setOnClickListener {
-            uploadDataToServer()
+            val t = binding.edtTitle.text.toString()
+            val d = binding.edtDescription.text.toString()
+            selectedImageUri?.let { uri ->
+                viewModel.uploadAndSync(uri, t, d)
+            }
         }
     }
 
     private fun setupRecyclerView() {
-        adapter = ImageAdapter(emptyList()) { item ->
-            Toast.makeText(this, "Bạn chọn: ${item.title}", Toast.LENGTH_SHORT).show()
-        }
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = ImageAdapter { item -> /* Xử lý khi click item */ }
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    // --- PHẦN 1: GET DỮ LIỆU ---
-    private fun loadDataFromServer() {
-        lifecycleScope.launch {
-            try {
-                val response = RetrofitClient.instance.getListItems()
-                adapter.updateData(response)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this@HomeActivity, "Lỗi GET: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private fun setupObservers() {
+        // QUAN TRỌNG: Lắng nghe Room thông qua ViewModel
+        viewModel.allImages.observe(this) { list ->
+            adapter.submitList(list) // Cứ Room có data là RecyclerView tự nhảy
         }
+
+        // Lắng nghe các thông báo lỗi hoặc thành công
+        viewModel.statusMessage.observe(this) { msg ->
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
+
+        // Tải dữ liệu lần đầu
+        viewModel.syncDataFromApi()
     }
 
-    // --- PHẦN 2: POST DỮ LIỆU ---
-    private fun uploadDataToServer() {
-        val uri = selectedImageUri ?: return
-        if (uri == null) {
-            Toast.makeText(this, "Vui lòng chọn ảnh trước!", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Lấy text từ EditText (Giả sử bạn có 2 ô nhập liệu này)
-        val title = binding.edtTitle.text.toString()
-        val desc = binding.edtDescription.text.toString()
-
-        lifecycleScope.launch {
-            try {
-                // Chuyển Uri thành File để gửi
-                val file = uriToFile(uri)
-                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                val imagePart = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
-                val titlePart = title.toRequestBody("text/plain".toMediaTypeOrNull())
-                val descPart = desc.toRequestBody("text/plain".toMediaTypeOrNull())
-
-                // Gọi API POST
-                val responseBody = RetrofitClient.instance.
-                uploadData(titlePart, descPart, imagePart)
-
-                // Nhận lại ảnh đã chỉnh sửa từ server và hiển thị lên ImageView
-                val bitmap = BitmapFactory.decodeStream(responseBody.byteStream())
-                binding.imgResult.setImageBitmap(bitmap)
-
-                Toast.makeText(this@HomeActivity, "Upload & Nhận ảnh thành công!", Toast.LENGTH_SHORT).show()
-
-                // Load lại danh sách RecyclerView để cập nhật ảnh mới
-                loadDataFromServer()
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this@HomeActivity, "Lỗi POST: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     // Launcher để lấy kết quả chọn ảnh
     private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -339,14 +306,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         }
     }
 
-    // Hàm phụ trợ chuyển Uri sang File (bắt buộc để gửi Multipart)
-    private fun uriToFile(uri: Uri): File {
-        val inputStream = contentResolver.openInputStream(uri)
-        val file = File(cacheDir, "temp_image.jpg")
-        val outputStream = FileOutputStream(file)
-        inputStream?.copyTo(outputStream)
-        return file
-    }
 }
 
 
