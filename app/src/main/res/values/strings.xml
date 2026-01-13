@@ -36,5 +36,9 @@
     <string name="choose_another_photo">choose another photo</string>
     <string name="your_style">Chọn 2 ảnh để hoán đổi khuôn mặt </string>
     <string name="generate">Generate</string>
-
+    <string name="you_want_to_close_dialog">You want to close dialog</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 </resources>

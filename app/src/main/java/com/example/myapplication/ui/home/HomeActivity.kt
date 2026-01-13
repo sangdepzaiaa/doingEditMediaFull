@@ -1,14 +1,13 @@
 package com.example.myapplication.ui.home
 
-
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,22 +21,20 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.data.enumm.FaceDetectionResult
-import com.example.myapplication.data.remote.RetrofitClient
 import com.example.myapplication.databinding.ActivityHomeBinding
 import com.example.myapplication.ui.dialog.DialogCheckFaceId
+import com.example.myapplication.ui.dialog.DialogInsert
+import com.example.myapplication.ui.dialog.DialogItemDelete
+import com.example.myapplication.ui.dialog.DialogItemUpdate
 import com.example.myapplication.ui.dialog.DialogTypeChoosePhoto
 import com.example.myapplication.ui.permission.PermissionActivity
 import com.example.myapplication.utils.copyToCacheFile
+import com.example.myapplication.utils.tap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import java.io.FileOutputStream
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
     inflater = ActivityHomeBinding::inflate
@@ -45,12 +42,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
     var tempFile: File? = null
     var currentPhoto: File? = null
     var currentPhoto2: File? = null
-    private lateinit var adapter: ImageAdapter
+    private lateinit var adapter: HomeAdapter
     private var currentImageId: String? = null
 
     private var selectedImageUri: Uri? = null
 
-    private val viewModel: ImageViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
+
+    private var dialogItemUpdate: DialogItemUpdate? = null
+    val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+            // Truyền ngược Uri vào Dialog để hiển thị lên ImageView của Dialog
+            dialogItemUpdate?.setImagePreview(it)
+        }
+    }
 
     val pickContent = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -259,28 +264,51 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         super.initView()
         setupRecyclerView()
         setupObservers()
+        setupFloat()
+    }
 
-        // Sự kiện chọn ảnh từ thư viện
-        binding.btnSelectImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            pickImageLauncher.launch(intent)
-        }
-
-        // Sự kiện POST dữ liệu lên server
-        binding.btnUpload.setOnClickListener {
-            val t = binding.edtTitle.text.toString()
-            val d = binding.edtDescription.text.toString()
-            selectedImageUri?.let { uri ->
-                viewModel.uploadAndSync(uri, t, d)
-            }
+    private fun setupFloat(){
+        binding.fabCenterBottom.tap {
+            val dialog = DialogInsert(viewModel)
+            dialog.show(supportFragmentManager,"dialog")
         }
     }
 
     private fun setupRecyclerView() {
-        adapter = ImageAdapter { item -> /* Xử lý khi click item */ }
+        adapter = HomeAdapter().apply {
+            onItemClick = { view, item ->
+                val popup = PopupMenu(this@HomeActivity, view)
+                popup.menuInflater.inflate(R.menu.menu_item_options, popup.menu)
+
+                popup.setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_update -> {
+                            // 3. Khởi tạo dialog tại đây và truyền item hiện tại vào
+                            dialogItemUpdate = DialogItemUpdate(this@HomeActivity,viewModel, item) {
+                                pickImageLauncher.launch("image/*")
+                            }
+                            dialogItemUpdate?.show()
+                            true
+                        }
+                        R.id.menu_delete -> {
+                            DialogItemDelete(this@HomeActivity, viewModel,item).show()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+
+                // (Tùy chọn) Hiện icon nếu bạn dùng style cũ hoặc máy đời cao
+                // popup.setForceShowIcon(true)
+
+                popup.show()
+            }
+        }
+
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
+
 
     private fun setupObservers() {
         // QUAN TRỌNG: Lắng nghe Room thông qua ViewModel
@@ -295,15 +323,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
 
         // Tải dữ liệu lần đầu
         viewModel.syncDataFromApi()
-    }
-
-
-    // Launcher để lấy kết quả chọn ảnh
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            selectedImageUri = result.data?.data
-            binding.imgPreview.setImageURI(selectedImageUri) // Hiển thị ảnh vừa chọn để xem trước
-        }
     }
 
 }

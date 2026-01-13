@@ -26,8 +26,7 @@ android {
         release {
             // Tắt làm rối mã nguồn và tối ưu tài nguyên để tránh lỗi khởi tạo ViewModel
             isMinifyEnabled = false
-            // Giữ nguyên phần signing và proguard (vì khi false nó sẽ không chạy)
-            signingConfig = signingConfigs.getByName("debug")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
