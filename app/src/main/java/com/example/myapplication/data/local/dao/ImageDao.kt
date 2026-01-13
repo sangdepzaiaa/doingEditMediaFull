@@ -1,6 +1,7 @@
 package com.example.myapplication.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,7 +15,7 @@ interface ImageDao {
     suspend fun insertOrUpdate(images: List<ImageEntity>)
 
     @Query("DELETE FROM images WHERE id NOT IN (:ids)")
-    suspend fun deleteMissing(ids: List<String>)
+    suspend fun deleteMissing(ids: List<Int>)
 
     @Transaction
     suspend fun syncImages(images: List<ImageEntity>) {
@@ -25,4 +26,7 @@ interface ImageDao {
 
     @Query("SELECT * FROM images ORDER BY id DESC")
     fun getAllImages(): Flow<List<ImageEntity>>
+
+    @Delete
+    suspend fun delete(image: ImageEntity)
 }

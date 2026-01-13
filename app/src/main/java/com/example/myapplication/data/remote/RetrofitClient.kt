@@ -14,7 +14,7 @@ import java.net.NetworkInterface
 
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.1.212:8000/"
+    private const val BASE_URL = "http://192.168.0.106:8000/"
 
     // Tạo interceptor để log request/response private
     val logging = HttpLoggingInterceptor().apply {
@@ -37,3 +37,4 @@ object RetrofitClient {
             .create(ApiService::class.java)
     }
 }
+

@@ -19,7 +19,7 @@ abstract class BaseBottomSheet<VB: ViewBinding>(
     var inflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 ): BottomSheetDialogFragment(){
     private var _binding: VB? = null
-    protected val binding:VB = _binding!!
+    protected val binding:VB get() =  _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +33,7 @@ abstract class BaseBottomSheet<VB: ViewBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.setCancelable(true)
-        dialog?.setCanceledOnTouchOutside(false)
+        dialog?.setCanceledOnTouchOutside(true)
         dialog?.setOnKeyListener { _,onKey,onEvent ->
             if (onKey == KeyEvent.KEYCODE_BACK && onEvent.action == KeyEvent.ACTION_UP) true
             else false

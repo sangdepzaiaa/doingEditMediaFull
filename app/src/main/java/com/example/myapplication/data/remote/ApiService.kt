@@ -5,10 +5,13 @@ import com.example.myapplication.data.model.ItemResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface ApiService {
     @GET("/items")
@@ -21,6 +24,20 @@ interface ApiService {
         @Part("description") description: RequestBody,
         @Part file: MultipartBody.Part // Đổi tên ở đây cho dễ đọc, quan trọng nhất vẫn là lúc tạo FormData
     ): ResponseBody
+
+    @Multipart
+    @PUT("/items/{id}")
+    suspend fun updateItem(
+        @Path("id") id: Int,
+        @Part("title") title: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part file: MultipartBody.Part? = null )
+    : ResponseBody
+
+     @DELETE("/items/{id}")
+     suspend fun deleteItem(
+         @Path("id") id: Int
+     ): ResponseBody
 }
 
 //Call<T> là đối tượng đại diện cho 1 request HTTP mà Retrofit tạo ra.

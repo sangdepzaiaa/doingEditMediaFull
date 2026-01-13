@@ -21,7 +21,7 @@ abstract class BaseDialog<VB: ViewBinding>(
     init {
         setContentView(binding.root)
         setCancelable(true)
-        setCanceledOnTouchOutside(false)
+        setCanceledOnTouchOutside(true)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         setOnKeyListener { _,onKey,onEvent ->
             if (onKey == KeyEvent.KEYCODE_BACK && onEvent.action == KeyEvent.ACTION_UP) true
