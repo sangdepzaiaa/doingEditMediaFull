@@ -7,6 +7,7 @@ import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.databinding.ActivitySplashBinding
 import com.example.myapplication.ui.home.HomeActivity
 import com.example.myapplication.ui.permission.PermissionActivity
+import com.example.myapplication.ui.video_to_audio.video_to_audio.VideoToAudioActivity
 import com.example.myapplication.utils.SharePreUtils
 import com.example.myapplication.utils.const
 import kotlinx.coroutines.delay
@@ -46,7 +47,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(
                 SharePreUtils.setBoolean(this@SplashActivity, const.CHECK_PERMISSION,true)
                 startActivity(Intent(this@SplashActivity, PermissionActivity::class.java))
             }else{
-                startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+                startActivity(Intent(this@SplashActivity, VideoToAudioActivity::class.java))
             }
         }
     }

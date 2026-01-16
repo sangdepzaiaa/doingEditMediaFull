@@ -41,4 +41,73 @@
     <string name="no">No</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="select_audio">Select Audio</string>
+    <string name="add_file">Add file</string>
+    <string name="unknown">unknown</string>
+    <string name="videotoaudio">Video To Audio</string>
+    <string name="select_max_4">Please select minimum 1 video and maximum 4 video</string>
+    <string name="please_select_a_media_file_at_least_5_seconds_long">Please select a media file at least 5 seconds long.</string>
+    <string name="please_select_video">Please select at least 1 video</string>
+    <string name="of_selected">%1$d of 4 selected</string>
+    <string name="formart">formart</string>
+    <string name="wav" translatable="false">WAV</string>
+    <string name="aac" translatable="false">AAC</string>
+    <string name="flac" translatable="false">FLAC</string>
+    <string name="ogg" translatable="false">OGG</string>
+    <string name="mp3" translatable="false">MP3</string>
+    <string name="convert">convert</string>
+    <string name="converting">converting...</string>
+    <string name="stringnamefiledefault" translatable="false">audio_03092025_xxxxxx</string>
+    <string name="durationspeedaudio" translatable="false">00:17:00</string>
+    <string name="sizespeedaudio" translatable="false">104.kB</string>
+    <string name="notification">notification</string>
+    <string name="usefor">usefor</string>
+    <string name="failed_to_set_contact_ringtone">failed to set contact ringtone</string>
+    <string name="detail">detail</string>
+    <string name="result">result</string>
+    <string name="play">play</string>
+    <string name="more">more</string>
+    <string name="duration_result">duration result</string>
+    <string name="speed">speed</string>
+    <string name="duration_begin">Duration begin: %s</string>
+    <string name="file_not_ready">file not ready</string>
+    <string name="_0_5" translatable="false">0.5</string>
+    <string name="_0_75" translatable="false">0.75</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_1_25" translatable="false">1.25</string>
+    <string name="_1_5" translatable="false">1.5</string>
+    <string name="_1_75" translatable="false">1.75</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="saving">saving</string>
+    <string name="no_files">no files</string>
+    <string name="saving_your_audio_please_wait">saving your audio please wait</string>
+    <string name="home">home</string>
+    <string name="rename_success">rename success</string>
+    <string name="share">share</string>
+    <string name="audiohistory">history</string>
+    <string name="all">all</string>
+    <string name="there_are_currently_no_files_here">there are currently no files here</string>
+    <string name="audiospeed">audiospeed</string>
+    <string name="ringtone">ringtone</string>
+    <string name="alarm">alarm</string>
+    <string name="contract">contract</string>
+    <string name="cutter">cutter</string>
+    <string name="rename">rename</string>
+    <string name="player">player</string>
+    <string name="enter_name">Enter name</string>
+    <string name="txt_cancel">Cancel</string>
+    <string name="delete_audio">Delete Audio</string>
+    <string name="confirm">confirm</string>
+    <string name="_0">0%</string>
+    <string name="do_you_want_to_exit_this_screen">do you want to exit this screen</string>
+    <string name="doyouwantdeletethisfile">Do you want to delete this file?</string>
+    <string name="format_duration">Thời gian: %1$s</string>
+    <string name="convertion">convertion</string>
+    <string name="alert">alert</string>
+    <string name="do_you_want_to_cancel_the_conversion">do you want to cancel the conversion</string>
+    <string name="ok">ok</string>
+    <string name="durationeditspeedaudio" translatable="false">00:08:08</string>
+    <string name="error_occurred_generic">error occurred generic</string>
+    <string name="please_select_audio_files_with_a_total_duration_of_up_to_30_minutes">please select audio files with a total duration of up to 30 minutes</string>
 </resources>

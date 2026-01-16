@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/bg_pop_up"
+    android:divider="@drawable/divider_line"
+    android:showDividers="middle">
+
+    <!-- Cutter -->
+    <TextView
+        android:id="@+id/tvCutter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/cut_result"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="Cutter"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <!-- Rename -->
+    <TextView
+        android:id="@+id/tvRename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/edit_result"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="Rename"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <!-- Delete -->
+    <TextView
+        android:id="@+id/tvDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/delete_result"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="Delete"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</LinearLayout>

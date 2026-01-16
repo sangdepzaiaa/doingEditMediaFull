@@ -153,5 +153,12 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.13.2")
 
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+
+    implementation(files("libs/ffmpeg-kit-fg.aar"))
+  //  implementation("com.arthenica:ffmpeg-kit-full:6.0")
+
+
 
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/bg_pop_up"
+    android:divider="@drawable/divider_line"
+    android:showDividers="middle">
+
+
+    <TextView
+        android:id="@+id/tvPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="@string/player"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:drawableLeftCompat="@drawable/ic_play_result" />
+
+    <TextView
+        android:id="@+id/tvCutter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="@string/cutter"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:drawableLeftCompat="@drawable/cut_result" />
+
+    <TextView
+        android:id="@+id/tvRename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="@string/rename"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:drawableLeftCompat="@drawable/edit_result" />
+
+
+    <TextView
+        android:id="@+id/tvDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="@string/delete"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:drawableLeftCompat="@drawable/delete_result" />
+
+    <TextView
+        android:id="@+id/tvShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical"
+        android:paddingVertical="8dp"
+        android:text="@string/share"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:drawableStartCompat="@drawable/ic_share_result" />
+
+</LinearLayout>

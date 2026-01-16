@@ -3,9 +3,12 @@
     android:orientation="vertical"
     android:padding="8dp"
     android:layout_width="match_parent"
+    android:layout_margin="10dp"
+    android:background="@drawable/bg_round_8_border"
     android:layout_height="wrap_content">
 
     <TextView
+        android:layout_gravity="center_horizontal"
         android:text="áasss"
         android:id="@+id/tvFilename"
         android:textSize="16sp"
@@ -14,6 +17,7 @@
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:layout_gravity="center_horizontal"
         android:text="áasss"
         android:id="@+id/tvSize"
         android:textSize="14sp"
@@ -22,6 +26,7 @@
 
 
     <ImageView
+        android:layout_gravity="center_horizontal"
         android:id="@+id/imageView"
         android:layout_width="180dp"
         android:layout_height="180dp"

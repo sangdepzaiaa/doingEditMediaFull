@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_8_border"
+    android:padding="6dp"
+    android:layout_marginVertical="3dp">
+
+    <!-- Icon nhạc -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/music"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Tên file -->
+    <TextView
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:id="@+id/tvFileName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/figtree_semi_bold"
+        android:text="@string/stringnamefiledefault"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/imgMusic"
+        app:layout_constraintStart_toEndOf="@+id/imgMusic"
+        app:layout_constraintEnd_toStartOf="@+id/btnMore"
+        app:layout_constraintHorizontal_bias="0"
+        android:paddingStart="12dp" />
+
+    <!-- Duration -->
+    <TextView
+        android:id="@+id/tvFileduration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/durationeditspeedaudio"
+        android:fontFamily="@font/figtree_medium"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvFileName"
+        app:layout_constraintStart_toStartOf="@+id/tvFileName"
+        android:paddingStart="12dp"
+        android:layout_marginTop="4dp"/>
+
+    <!-- File size -->
+    <TextView
+        android:id="@+id/tvFilesize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sizespeedaudio"
+        android:fontFamily="@font/figtree_medium"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="@+id/tvFileduration"
+        app:layout_constraintStart_toEndOf="@+id/tvFileduration"
+        android:layout_marginStart="8dp" />
+
+    <!-- Nút 3 chấm -->
+    <ImageView
+        android:id="@+id/btnMore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.06"
+        android:src="@drawable/icon_three_default"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

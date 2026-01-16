@@ -30,16 +30,6 @@ class DialogItemUpdate(
             val title = binding.edtFileName.text.toString()
             val desc = binding.edtSize.text.toString()
 
-            // Logic: Nếu đã chọn ảnh mới (selectedImageUri != null) thì lấy ảnh mới,
-            // ngược lại giữ nguyên link ảnh cũ (item.image_url)
-            val imageUrl = selectedImageUri?.toString() ?: item.image_url
-
-            val updatedEntity = item.copy(
-                title = title,
-                description = desc,
-                image_url = imageUrl
-            )
-
             viewModel.updateImage(item, selectedImageUri, title, desc)
         }
     }

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    tools:context=".ui.result.ResultActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/bgView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/bg_round_speed_audio"
+        android:backgroundTint="@color/white"
+        app:layout_constraintDimensionRatio="320:50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgpauseaudiospeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/music"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bgView"
+        app:layout_constraintStart_toStartOf="@+id/bgView"
+        app:layout_constraintTop_toTopOf="@+id/bgView"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/txvnamefile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/figtree_semi_bold"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgpauseaudiospeed"
+        app:layout_constraintEnd_toEndOf="@+id/bgView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imgpauseaudiospeed"
+        app:layout_constraintTop_toTopOf="@+id/imgpauseaudiospeed"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="@string/stringnamefiledefault" />
+
+    <TextView
+        android:id="@+id/txvmp3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="@string/mp3"
+        android:textColor="@color/color_1B1B1B"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/txvnamefile"
+        app:layout_constraintTop_toBottomOf="@+id/txvnamefile" />
+
+    <TextView
+        android:id="@+id/txvdurationaudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:singleLine="true"
+        android:text="@string/durationspeedaudio"
+        android:textColor="@color/color_1B1B1B"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/txvmp3"
+        app:layout_constraintTop_toBottomOf="@+id/txvnamefile" />
+
+    <TextView
+        android:id="@+id/txvsizeaudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="173dp"
+        android:singleLine="true"
+        android:text="@string/sizespeedaudio"
+        android:textColor="@color/color_1B1B1B"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/bgView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/txvdurationaudio"
+        app:layout_constraintTop_toBottomOf="@+id/txvnamefile" />
+
+    <SeekBar
+        android:id="@+id/seekBarSpeed"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="-10dp"
+        android:paddingVertical="10dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/custom_seekbar_progress"
+        android:progressTint="@color/color_00C40D"
+        android:splitTrack="false"
+        android:thumb="@drawable/seekbar_thumb"
+        android:thumbOffset="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bgView" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="20dp"
+        android:paddingStart="0dp"
+        android:fontFamily="@font/figtree_regular"
+        android:minWidth="30dp"
+        android:textAlignment="textEnd"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/seekBarSpeed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/seekBarSpeed"
+        tools:ignore="SmallSp"
+        tools:text="00:08:08" />
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:baselineAligned="false"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBarSpeed">
+
+        <include
+            android:id="@+id/btnPlay"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/btnHome"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/btnShare"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/btnMore"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txvusefor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:fontFamily="sans-serif"
+        android:textSize="12sp"
+        android:text="@string/usefor"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@id/ll_ringtone"
+        app:layout_constraintTop_toTopOf="@id/ll_ringtone" />
+
+    <LinearLayout
+        android:id="@+id/ll_ringtone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingTop="40dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/bg_round_8_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_btn">
+
+        <include
+            android:id="@+id/btnRingtone"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/btnAlarm"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/btnNotification"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <include
+            android:id="@+id/btnContact"
+            layout="@layout/view_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/figtree_semi_bold</item>
+    </style>
+
+    <style name="RadioButtonMain" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/color_00C40D</item>
+        <item name="colorControlActivated">@color/color_00C40D</item>
+    </style>
+
+    <style name="FormatButton" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintWidth_percent">0.18</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/figtree_medium</item>
+        <item name="elevation">0dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/bg_round_8_border</item>
+    </style>
+
+    <style name="FormatButtonSelected" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="layout_constraintWidth_percent">0.18</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/figtree_medium</item>
+        <item name="elevation">0dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/bg_radius_8_ee5300</item>
+    </style>
+
+
+    <style name="TrimOption">
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="TrimOption.Selected" parent="TrimOption">
+        <item name="android:background">@drawable/trim_option_selected_bg</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="TrimOption.Unselected" parent="TrimOption">
+        <item name="android:background">@drawable/trim_option_unselected_bg</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

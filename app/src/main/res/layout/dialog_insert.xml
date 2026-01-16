@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_margin="10dp"
     android:orientation="vertical"
-    android:paddingTop="8dp">
+    android:background="@drawable/bg_round_8_border"
+    android:padding="25dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
         android:id="@+id/btnSelectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/color_00C40D"
         android:layout_gravity="center"
         android:text="Chọn ảnh từ Gallery" />
 

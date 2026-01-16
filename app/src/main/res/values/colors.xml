@@ -7,4 +7,8 @@
     <color name="color_000000_7">#12000000</color>
     <color name="color_1B1B1B_7">#B31B1B1B</color>
     <color name="color_808080">#808080</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
+    <color name="color_FFFFFF">#FFFFFF</color>
+    <color name="color_111111_3">#08111111</color>
+    <color name="color_7F7F7F">#7F7F7F</color>
 </resources>

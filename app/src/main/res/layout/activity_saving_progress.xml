@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_default"
+    tools:context=".ui.result.SavingProgressActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/tool_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFiles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekBarProgress"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:max="100"
+        android:progress="0"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="14dp"
+        android:progressDrawable="@drawable/custom_seekbar_progress"
+        android:progressTint="@color/color_00C40D"
+        android:splitTrack="false"
+        android:thumb="@drawable/bg_circle_cut"
+        android:thumbOffset="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvProgressPercent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvFiles" />
+
+    <TextView
+        android:id="@+id/tvProgressPercent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:fontFamily="@font/figtree_regular"
+        android:paddingEnd="20dp"
+        android:paddingStart="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/seekBarProgress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/seekBarProgress"
+        android:text="@string/_0" />
+</androidx.constraintlayout.widget.ConstraintLayout>
