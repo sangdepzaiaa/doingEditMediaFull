@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ss"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_8_border"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <!-- Text trên -->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/thereare"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <!-- Button dưới -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_go_to_cutter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="21dp"
+        android:elevation="0dp"
+        android:fontFamily="@font/figtree_semi_bold"
+        android:stateListAnimator="@null"
+        android:text="@string/gotocutter"
+        android:textAllCaps="false"
+        android:textColor="@color/color_00C40D"
+        android:textSize="12sp"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="14dp"
+        app:elevation="0dp"
+        app:pressedTranslationZ="0dp"
+        app:strokeColor="@color/color_00C40D"
+        app:strokeWidth="1dp" />
+</LinearLayout>

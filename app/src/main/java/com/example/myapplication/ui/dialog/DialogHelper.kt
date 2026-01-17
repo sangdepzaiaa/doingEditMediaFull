@@ -1,8 +1,10 @@
 package com.example.myapplication.ui.dialog
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,25 +16,225 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import com.example.myapplication.R
 import com.example.myapplication.base.BaseDialog
 import com.example.myapplication.data.enumm.MediaFile
+import com.example.myapplication.data.enumm.PermissionType
+import com.example.myapplication.data.local.dao.history.MediaFileRepository
+import com.example.myapplication.databinding.DialogAudioOptionsBinding
 import com.example.myapplication.databinding.DialogConfirmExitBinding
 import com.example.myapplication.databinding.DialogDeleteResultBinding
+import com.example.myapplication.databinding.DialogInfoBinding
 import com.example.myapplication.databinding.DialogMenuMoreHistoryBinding
 import com.example.myapplication.databinding.DialogMenuMoreResultBinding
 import com.example.myapplication.databinding.DialogRenameResultBinding
 import com.example.myapplication.databinding.DialogSavingBinding
+import com.example.myapplication.databinding.DialogSetAsItemHomeBinding
 import com.example.myapplication.databinding.DialogUploadImageErrorBinding
 import com.example.myapplication.ui.result.ResultActivity
+import com.example.myapplication.utils.PermissionUtils
+import com.example.myapplication.utils.RingtoneUtils
+import com.example.myapplication.utils.deleteFile
+import com.example.myapplication.utils.formatDate
+import com.example.myapplication.utils.formatFileSize
+import com.example.myapplication.utils.getFolderName
+import com.example.myapplication.utils.getPathName
 import com.example.myapplication.utils.share
 import com.example.myapplication.utils.tap
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 
 object DialogHelper{
 
     var mediaFile: MediaFile? = null
+
+    fun showPopup(
+        context: Context,
+        mediaFile: MediaFile,
+        onRename: (String) -> Unit,
+        onSaveComplete: () -> Unit,
+        onContactPicker: ((MediaFile) -> Unit)? = null
+    ) {
+        DialogHelper.mediaFile = mediaFile
+        val layoutInflater = LayoutInflater.from(context)
+        val popupBinding = DialogAudioOptionsBinding.inflate(layoutInflater)
+
+        popupBinding.tvFileName.text = mediaFile.name
+
+        val popupWindow =
+            AlertDialog.Builder(context).setView(popupBinding.root).setCancelable(false).create()
+        popupWindow.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        // Click listeners
+//        popupBinding.btnCutter.tap {
+//            if (mediaFile == null) return@tap
+//            CutAudioActivity.newIntent(
+//                context, mediaFile!!, editType = EditType.AUDIO_CUTTER, onSaveComplete
+//            ).also {
+//                context.startActivity(it)
+//            }
+//            popupWindow.dismiss()
+//        }
+        popupBinding.btnSetRingtone.tap {
+            showSetAsDialog(context, mediaFile, onContactPicker)
+            popupWindow.dismiss()
+        }
+//        popupBinding.btnVolume.tap {
+//            showBoostVolumeDialog(
+//                context = context, mediaFile = mediaFile, onAudioBoostComplete = { boostedFile ->
+//                    ResultActivity.newIntent(context = context, boostedFile).also {
+//                        context.startActivity(it)
+//                    }
+//                }, onSaveComplete = onSaveComplete
+//            )
+//            popupWindow.dismiss()
+//        }
+        popupBinding.btnRename.tap {
+            showRenameDialog(
+                context,
+                currentName = mediaFile.name,
+                onSaveComplete = onSaveComplete,
+                onRename = { onRename(it) }
+            )
+            popupWindow.dismiss()
+        }
+        popupBinding.btnPlayer.tap {
+            ResultActivity.newIntent(context = context, mediaFile!!).also {
+                context.startActivity(it)
+            }
+            popupWindow.dismiss()
+        }
+        popupBinding.btnDelete.tap {
+            showDeleteDialog(
+                context, mediaFile, onSaveComplete = onSaveComplete
+            )
+            popupWindow.dismiss()
+        }
+        popupBinding.btnShare.tap {
+            mediaFile.share(context)
+            popupWindow.dismiss()
+        }
+        popupBinding.btnInfo.tap {
+            setInfo(context, mediaFile)
+            popupWindow.dismiss()
+        }
+        popupBinding.ivClose.tap {
+            popupWindow.dismiss()
+        }
+
+////        // Hiện popup ngay dưới anchor
+////        popupWindow.showAsDropDown(anchor, 0, 0)
+//
+//        // Tính toán tọa độ để căn giữa
+//        val screenWidth = anchor.context.resources.displayMetrics.widthPixels
+//        val screenHeight = anchor.context.resources.displayMetrics.heightPixels
+//        val x = (screenWidth - popupWidth) / 2
+//        val y = (screenHeight - popupHeight) / 2
+//
+//        // Hiển thị popup ở giữa màn hình
+//
+//        popupWindow.showAtLocation(anchor, Gravity.NO_GRAVITY, x, y)
+        popupWindow.show()
+        popupWindow.window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+    private fun showSetAsDialog(context: Context, mediaFile: MediaFile, onContactPicker: ((MediaFile) -> Unit)? = null) {
+        val layoutInflater = LayoutInflater.from(context)
+        val binding = DialogSetAsItemHomeBinding.inflate(layoutInflater)
+
+        val dialog = Dialog(context)
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        binding.btnCancel.tap { dialog.dismiss() }
+
+        binding.btnSave.tap {
+            dialog.dismiss()
+
+            // Get the selected radio button from the RadioGroup
+            when (binding.radioGroup.checkedRadioButtonId) {
+                binding.rabRingtone.id -> PermissionUtils.checkAndRequestAllPermissions(
+                    context as Activity, PermissionType.RINGTONES.value
+                ) {
+                    RingtoneUtils.setAsRingtone(context, mediaFile)
+                }
+
+                binding.rabAlarmTone.id -> PermissionUtils.checkAndRequestAllPermissions(
+                    context as Activity, PermissionType.ALARMS.value
+                ) {
+                    RingtoneUtils.setAsAlarm(context, mediaFile)
+                }
+
+                binding.rabNotification.id -> PermissionUtils.checkAndRequestAllPermissions(
+                    context as Activity, PermissionType.NOTIFICATIONS.value
+                ) {
+                    RingtoneUtils.setAsNotification(context, mediaFile)
+                }
+
+                binding.rabContact.id -> PermissionUtils.checkAndRequestAllPermissions(
+                    context as Activity, PermissionType.CONTACTS.value
+                ) {
+                    if (onContactPicker != null) {
+                        // Sử dụng callback từ Activity nếu có
+                        onContactPicker(mediaFile)
+                    } else {
+                        // Fallback: chỉ mở danh bạ
+                        try {
+                            val intent = RingtoneUtils.getContactPickerIntent()
+                            context.startActivity(intent)
+                        } catch (e: Exception) {
+                            android.widget.Toast.makeText(
+                                context,
+                                context.getString(R.string.cannot_open_contacts),
+                                android.widget.Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+
+        dialog.show()
+        dialog.window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+    }
+
+
+    private fun setInfo(context: Context, mediaFile: MediaFile) {
+        val layoutInflater = LayoutInflater.from(context)
+        val dialogBinding = DialogInfoBinding.inflate(layoutInflater)
+
+        val dialog =
+            AlertDialog.Builder(context).setView(dialogBinding.root).setCancelable(false).create()
+
+        dialogBinding.apply {
+            tvvFolderValue.text = mediaFile.uri.getFolderName(context)
+            tvvSizeValue.text = mediaFile.size.formatFileSize()
+            tvvModifiedValue.text = mediaFile.dateAdded.formatDate()
+            tvvPathValue.text = mediaFile.uri.getPathName(context)
+        }
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        dialog.window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.8).toInt(),
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
+
+        dialogBinding.ivClose.tap {
+            dialog.dismiss()
+        }
+    }
+
+
 
     class SavingDialog(context: Context) : BaseDialog<DialogSavingBinding>(context,
         inflater = DialogSavingBinding::inflate
@@ -199,16 +401,28 @@ object DialogHelper{
         )
     }
 
-    fun showDeleteDialog(context: Context, onItemDelete: () -> Unit) {
+    private fun showDeleteDialog(
+        context: Context, mediaFile: MediaFile, onSaveComplete: (() -> Unit)?
+    ) {
+        val mediaFileRepository =
+            (context.applicationContext as KoinComponent).get<MediaFileRepository>()
         val layoutInflater = LayoutInflater.from(context)
         val binding = DialogDeleteResultBinding.inflate(layoutInflater)
         val dialog = Dialog(context)
         dialog.setContentView(binding.root)
         dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-
         binding.btnCancel.tap { dialog.dismiss() }
         binding.btnSave.tap {
-            onItemDelete()
+            val scope = (context as? LifecycleOwner)?.lifecycleScope
+            scope?.launch {
+                try {
+                    mediaFileRepository.deleteMediaById(mediaFile.id)
+                    context.deleteFile(mediaFile.uri)
+                    onSaveComplete?.invoke()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
             dialog.dismiss()
         }
 
@@ -319,6 +533,26 @@ object DialogHelper{
             anchor,
             popupBinding,
             popupWindow
+        )
+    }
+
+    fun showDeleteDialog(context: Context, onItemDelete: () -> Unit) {
+        val layoutInflater = LayoutInflater.from(context)
+        val binding = DialogDeleteResultBinding.inflate(layoutInflater)
+        val dialog = Dialog(context)
+        dialog.setContentView(binding.root)
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+
+        binding.btnCancel.tap { dialog.dismiss() }
+        binding.btnSave.tap {
+            onItemDelete()
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        dialog.window?.setLayout(
+            (context.resources.displayMetrics.widthPixels * 0.9).toInt(),
+            WindowManager.LayoutParams.WRAP_CONTENT
         )
     }
 

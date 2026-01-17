@@ -53,7 +53,7 @@ import kotlin.getValue
 
 class ResultActivity :
     BaseActivity<ActivityResultBinding>(inflater = ActivityResultBinding::inflate) {
-    private val viewModel: ResultViewModel by viewModels()
+    private val viewModel: ResultViewModel by inject()
     private var mediaFile: MediaFile? = null
     private var exoPlayer: ExoPlayer? = null
     private var isPlaying = false

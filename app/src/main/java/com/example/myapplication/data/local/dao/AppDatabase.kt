@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.myapplication.data.local.dao.history.MediaEntity
 import com.example.myapplication.data.model.ImageEntity
+import com.example.myapplication.utils.Converter
 import java.util.concurrent.Executors
 
 @Database(entities = [ImageEntity::class], version = 1)
@@ -27,4 +30,15 @@ abstract class AppDatabase : RoomDatabase() {
                     .build().also { instance = it }
             }
     }
+}
+
+@Database(
+    entities = [MediaEntity::class],
+    version = 1,
+    exportSchema = false
+)
+@TypeConverters(Converter::class)
+abstract class MyDatabase : RoomDatabase() {
+    abstract fun mediaDao(): MediaDao
+
 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@drawable/bg_round_8_border">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/allow_system_settings_title"
+        android:fontFamily="@font/figtree_semi_bold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/edtName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/figtree_medium"
+        android:textColor="@color/black"
+        android:hint="@string/allow_system_settings"
+        android:lineSpacingExtra="0dp"
+        android:lineSpacingMultiplier="1.2"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:inputType="none"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/btnCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:padding="14dp"
+        android:text="@string/txt_cancel"
+        android:textColor="@color/color_7F7F7F"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:fontFamily="@font/figtree_semi_bold"
+        app:layout_constraintTop_toBottomOf="@+id/edtName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSave" />
+
+    <TextView
+        android:id="@+id/btnSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="14dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/save"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/bg_radius_8_ee5300"
+        android:textSize="16sp"
+        android:fontFamily="@font/figtree_semi_bold"
+        app:layout_constraintTop_toBottomOf="@+id/edtName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnCancel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

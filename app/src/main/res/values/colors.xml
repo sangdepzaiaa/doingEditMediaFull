@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_00C40D">#00C40D</color>
+    <color name="color_9DEBA2">#9DEBA2</color>
     <color name="color_1B1B1B">#1B1B1B</color>
     <color name="color_000000_7">#12000000</color>
     <color name="color_1B1B1B_7">#B31B1B1B</color>
@@ -11,4 +12,6 @@
     <color name="color_FFFFFF">#FFFFFF</color>
     <color name="color_111111_3">#08111111</color>
     <color name="color_7F7F7F">#7F7F7F</color>
+    <color name="color_FFF6D5">#FFF6D5</color>
+    <color name="color_FFD6D5">#FFD6D5</color>
 </resources>

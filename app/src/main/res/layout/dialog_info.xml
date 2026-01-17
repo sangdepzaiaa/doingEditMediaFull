@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@drawable/bg_round_8_border">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivClose"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/figtree_semi_bold"
+        android:gravity="center"
+        android:text="@string/info"
+        android:layout_marginHorizontal="40dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvvFolderLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/folder"
+        android:textSize="12sp"
+        android:fontFamily="@font/figtree_medium"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Folder Value -->
+    <TextView
+        android:id="@+id/tvvFolderValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="/storage/emulated/0/Music/A_RingtoneMarker/"
+        android:textSize="10sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/figtree_regular"
+        android:ellipsize="none"
+        android:scrollHorizontally="false"
+        android:singleLine="false"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+    <!-- Size Label -->
+    <TextView
+        android:id="@+id/tvvSizeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/size"
+        android:textSize="12sp"
+        android:fontFamily="@font/figtree_medium"
+        app:layout_constraintTop_toBottomOf="@id/tvvFolderValue"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp" />
+
+    <!-- Size Value -->
+    <TextView
+        android:id="@+id/tvvSizeValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/figtree_regular"
+        android:singleLine="false"
+        android:ellipsize="none"
+        tools:text="3.5 MB"
+        app:layout_constraintTop_toBottomOf="@id/tvvFolderValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp" />
+
+    <!-- Modified Label -->
+    <TextView
+        android:id="@+id/tvvModifiedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/modified"
+        android:textSize="12sp"
+        android:fontFamily="@font/figtree_medium"
+        app:layout_constraintTop_toBottomOf="@id/tvvSizeValue"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp" />
+
+    <!-- Modified Value -->
+    <TextView
+        android:id="@+id/tvvModifiedValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Fri 2025 Sep 05 - 16:18"
+        android:textSize="10sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/figtree_regular"
+        android:singleLine="false"
+        android:ellipsize="none"
+        app:layout_constraintTop_toBottomOf="@id/tvvSizeValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp" />
+
+    <!-- Path Label -->
+    <TextView
+        android:id="@+id/tvvPathLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/path"
+        android:textSize="12sp"
+        android:fontFamily="@font/figtree_medium"
+        app:layout_constraintTop_toBottomOf="@id/tvvModifiedValue"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp" />
+
+    <!-- Path Value -->
+    <TextView
+        android:id="@+id/tvvPathValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="/storage/emulated/0/Music/A_RingtoneMarker/mixAudio.20250904_142044.0.0.flac"
+        android:textSize="10sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/figtree_regular"
+        android:ellipsize="none"
+        android:singleLine="false"
+        android:scrollHorizontally="false"
+        app:layout_constraintTop_toBottomOf="@id/tvvModifiedValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

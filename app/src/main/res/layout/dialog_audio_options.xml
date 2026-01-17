@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_8_border"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="6dp">
+
+        <TextView
+            android:id="@+id/tvFileName"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/figtree_semi_bold"
+            android:singleLine="true"
+            android:text="@string/stringnamefiledefault"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivClose"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivClose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close"
+            android:padding="5dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Options -->
+
+    <TextView
+        android:id="@+id/btnSetRingtone"
+        style="@style/DialogItemStyle"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/setasring"
+        app:drawableStartCompat="@drawable/notification_dialog_item_home" />
+
+
+    <TextView
+        android:id="@+id/btnRename"
+        style="@style/DialogItemStyle"
+        app:drawableLeftCompat="@drawable/edit_dialog_item_home"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/rename" />
+
+    <TextView
+        android:id="@+id/btnPlayer"
+        style="@style/DialogItemStyle"
+        app:drawableLeftCompat="@drawable/play_dialog_item_home"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/player" />
+
+    <TextView
+        android:id="@+id/btnDelete"
+        style="@style/DialogItemStyle"
+        app:drawableLeftCompat="@drawable/delete_dialog_item_home"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/delete" />
+
+    <TextView
+        android:id="@+id/btnShare"
+        style="@style/DialogItemStyle"
+        app:drawableLeftCompat="@drawable/share_dialog_item_home"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/share" />
+
+    <TextView
+        android:id="@+id/btnInfo"
+        style="@style/DialogItemStyle"
+        app:drawableLeftCompat="@drawable/info_dialog_item_home"
+        android:fontFamily="@font/figtree_medium"
+        android:text="@string/info" />
+</LinearLayout>

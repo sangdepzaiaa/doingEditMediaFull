@@ -8,6 +8,8 @@ object const {
     const val MIN_SELECTED_MEDIA_DURATION_MS = 5 * 1000L // 5 seconds
 
     const val EXTRA_SELECTED_URIS = "selected_videos"
+    const val EXTRA_MEDIA_TYPE = "EXTRA_MEDIA_TYPE"
+
 
     const val EXTRA_MEDIA_FILES = "EXTRA_MEDIA_FILES"
 

@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.annotation.Keep
 import androidx.core.content.FileProvider
 import androidx.core.os.BundleCompat
+import androidx.documentfile.provider.DocumentFile
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.data.enumm.FormatType
@@ -30,6 +31,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.compareTo
@@ -357,6 +359,50 @@ fun generateOutputFile(
 
     return outputFile
 }
+
+fun Uri.getFolderName(context: Context): String {
+    val copiedFile = copyToAppStorage(context) ?: return "Unknown"
+    return copiedFile.parent ?: "Root"
+}
+
+fun Uri.copyToAppStorage(context: Context): File? {
+    val docFile = DocumentFile.fromSingleUri(context, this) ?: return null
+    val fileName = docFile.name ?: return null
+
+    val destFile = File(context.getExternalFilesDir(null), fileName)
+    context.contentResolver.openInputStream(this)?.use { input ->
+        destFile.outputStream().use { output ->
+            input.copyTo(output)
+        }
+    }
+    return destFile
+}
+
+@SuppressLint("DefaultLocale")
+fun Long.formatDate(): String {
+    return try {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this // Convert seconds to milliseconds
+
+        val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
+        val year = calendar.get(Calendar.YEAR)
+        val month = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
+        val day = String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH))
+        val hour = String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY))
+        val minute = String.format("%02d", calendar.get(Calendar.MINUTE))
+
+        Log.d("TAG", "formatDate: $dayOfWeek $year $month $day - $hour:$minute")
+        "$dayOfWeek $year $month $day - $hour:$minute"
+    } catch (e: Exception) {
+        "Unknown date"
+    }
+}
+
+fun Uri.getPathName(context: Context): String {
+    val copiedFile = copyToAppStorage(context) ?: return "Unknown"
+    return copiedFile.absolutePath
+}
+
 
 
 //Copy dữ liệu từ URI sang file

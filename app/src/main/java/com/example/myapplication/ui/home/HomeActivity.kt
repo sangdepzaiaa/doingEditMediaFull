@@ -34,6 +34,7 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import java.io.File
 
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
@@ -47,7 +48,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
 
     private var selectedImageUri: Uri? = null
 
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by inject()
 
     private var dialogItemUpdate: DialogItemUpdate? = null
     val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
