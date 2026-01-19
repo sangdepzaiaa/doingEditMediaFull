@@ -4,7 +4,7 @@ import com.example.myapplication.data.enumm.EditType
 import com.example.myapplication.data.enumm.MediaType
 import com.example.myapplication.data.local.dao.MediaDao
 import com.example.myapplication.data.local.dao.history.MediaEntity
-import com.example.myapplication.data.local.dao.history.MediaFileRepository
+import com.example.myapplication.data.repository.MediaFileRepository
 import java.io.File
 
 class MediaFileRepositoryImpl(

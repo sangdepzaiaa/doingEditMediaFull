@@ -18,6 +18,7 @@ import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.databinding.ActivityPermissionBinding
 import com.example.myapplication.ui.home.HomeActivity
+import com.example.myapplication.ui.main.MainActivity
 import com.example.myapplication.ui.video_to_audio.video_to_audio.VideoToAudioActivity
 import com.example.myapplication.utils.tap
 import io.ktor.client.plugins.UserAgent
@@ -107,7 +108,7 @@ class PermissionActivity : BaseActivity<ActivityPermissionBinding>(
     }
 
     fun negativeHome(){
-        startActivity(Intent(this, VideoToAudioActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

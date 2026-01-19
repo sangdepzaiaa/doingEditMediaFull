@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">내 애플리케이션</string>
+    <string name="mp3_cutter">MP3 커터</string>
+    <string name="text_splash_1">리소스 로딩 중</string>
+    <string name="text_splash_2">이미지 다운로드 중</string>
+    <string name="text_splash_3">오류 처리 중</string>
+    <string name="text_splash_4">버전 업데이트 중</string>
+    <string name="no_internet">인터넷 없음</string>
+    <string name="no_internet_connection">인터넷 연결 없음</string>
+    <string name="please_check_your_internet_connection_and_try_again">인터넷 연결을 확인하고 다시 시도해 주세요.</string>
+    <string name="retry">다시 시도</string>
+    <string name="permission">권한</string>
+    <string name="app_name_requires_these_permissions_to_function_properly">%1$s이(가) 정상적으로 작동하려면 이러한 권한이 필요합니다.</string>
+    <string name="camera">카메라</string>
+    <string name="continue_without_permission">권한 없이 계속</string>
+    <string name="grant_permission_camera">카메라 권한 허용</string>
+    <string name="titleheaderaudio">비트를 자르세요.\n열기를 느껴보세요.</string>
+    <string name="cut_now">지금 자르기</string>
+    <string name="speed_audio">오디오 속도</string>
+    <string name="thereare">있습니다</string>
+    <string name="gotocutter">커터로 이동</string>
+    <string name="setting">설정</string>
+    <string name="server">서버</string>
+    <string name="audio_file_not_available">오디오 파일을 사용할 수 없습니다</string>
+    <string name="set_as_ringtone_successfully">벨소리로 설정 완료</string>
+    <string name="failed_to_set_as_ringtone">벨소리 설정 실패</string>
+    <string name="set_as_alarm_tone_successfully">알람으로 설정 완료</string>
+    <string name="failed_to_set_as_alarm">알람 설정 실패</string>
+    <string name="set_as_notification_successfully">알림음으로 설정 완료</string>
+    <string name="failed_to_set_as_notification">알림음 설정 실패</string>
+    <string name="set_as_contact_tone_successfully">연락처 벨소리로 설정 완료</string>
+    <string name="setasring">벨소리로 설정</string>
+    <string name="info">정보</string>
+    <string name="folder">폴더</string>
+    <string name="size">크기</string>
+    <string name="modified">수정됨</string>
+    <string name="path">경로</string>
+    <string name="set_as">설정</string>
+    <string name="contact">연락처</string>
+    <string name="please_enable_modify_system_settings_and_return_to_the_app">\"시스템 설정 수정\"을 활성화하고 앱으로 돌아가 주세요</string>
+    <string name="cannot_open_settings">설정을 열 수 없습니다</string>
+    <string name="permission_required_to_set_ringtones">벨소리 설정을 위한 권한이 필요합니다</string>
+    <string name="permission_required_to_set_notifications">알림 설정을 위한 권한이 필요합니다</string>
+    <string name="permission_required_to_set_alarms">알람 설정을 위한 권한이 필요합니다</string>
+    <string name="permission_required_to_set_contact">연락처 벨소리 설정을 위한 권한이 필요합니다</string>
+    <string name="allow_system_settings_title">시스템 설정 수정 허용</string>
+    <string name="allow_system_settings">시스템 설정 수정 허용</string>
+    <string name="cannot_open_contacts">연락처를 열 수 없습니다</string>
+    <string name="permissions_granted">권한 허용됨</string>
+    <string name="permissions_denied">권한 거부됨</string>
+    <string name="permission_is_required">권한이 필요합니다</string>
+    <string name="name">이름</string>
+    <string name="duration">길이</string>
+    <string name="date">날짜</string>
+    <string name="sorted_by">%1$s 기준 정렬</string>
+
+    <plurals name="files_selected">
+        <item quantity="other">%d개 파일 선택됨</item>
+    </plurals>
+
+    <string name="txt_sort_order">정렬 순서:</string>
+    <string name="descending">내림차순</string>
+    <string name="ascending">오름차순</string>
+    <string name="txt_save">저장</string>
+    <string name="txt_files">파일</string>
+    <string name="txt_folders">폴더</string>
+    <string name="next">다음</string>
+    <string name="txt_sort">정렬</string>
+    <string name="txt_sorted_by">정렬 기준:</string>
+    <string name="saved_audio">저장된 오디오</string>
+    <string name="view_all_history">전체 기록 보기</string>
+    <string name="continue_n">계속</string>
+    <string name="permission_denied">권한 거부됨</string>
+    <string name="go_to_settings">설정으로 이동</string>
+    <string name="cancel">취소</string>
+    <string name="permission_camera">카메라 권한 필요</string>
+    <string name="permission_camera_message">이 앱은 사진 촬영과 동영상 녹화를 위해 카메라 접근 권한이 필요합니다. 모든 기능을 사용하려면 설정에서 권한을 허용해 주세요.</string>
+    <string name="permission_camera_explanation">앱은 사진 촬영과 동영상 녹화를 위해 카메라 접근 권한이 필요합니다.</string>
+    <string name="grant_permission">권한 허용</string>
+    <string name="upload_image">이미지 업로드</string>
+    <string name="select_how_to_upload_images">이미지 업로드 방법을 선택하세요</string>
+    <string name="gallery">갤러리</string>
+    <string name="error">오류</string>
+    <string name="no_face_detected">얼굴이 감지되지 않았습니다</string>
+    <string name="please_try_again_with_a_frontal_portrait_photo">정면 인물 사진으로 다시 시도해 주세요</string>
+    <string name="more_than_one_face_detected">얼굴이 여러 개 감지되었습니다</string>
+    <string name="please_try_again_with_a_single_faced_frontal_portrait">한 명의 얼굴이 있는 정면 인물 사진으로 다시 시도해 주세요</string>
+    <string name="upload_image_error">이미지 업로드 오류</string>
+    <string name="oops_something_went_wrong_please_try_again">앗! 문제가 발생했습니다. 다시 시도해 주세요.</string>
+    <string name="try_again">다시 시도</string>
+    <string name="choose_another_photo">다른 사진 선택</string>
+    <string name="your_style">얼굴 교환을 위해 2장의 사진을 선택하세요</string>
+    <string name="generate">생성</string>
+    <string name="you_want_to_close_dialog">이 대화 상자를 닫으시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니요</string>
+    <string name="update">업데이트</string>
+    <string name="delete">삭제</string>
+    <string name="save">저장</string>
+    <string name="select_audio">오디오 선택</string>
+    <string name="add_file">파일 추가</string>
+    <string name="unknown">알 수 없음</string>
+    <string name="videotoaudio">동영상을 오디오로</string>
+    <string name="random">무작위</string>
+    <string name="language">언어</string>
+    <string name="rating">평점</string>
+    <string name="feedback">피드백</string>
+    <string name="privacy_policy">개인정보 보호정책</string>
+    <string name="send">보내기</string>
+    <string name="enter_your_feedback">피드백을 입력하세요</string>
+    <string name="what_tip_you_like_to_give_us">어떤 제안을 해주시겠습니까?</string>
+    <string name="your_subject">제목</string>
+    <string name="choose_your_subject">제목 선택</string>
+    <string name="done">완료</string>
+    <string name="submit">제출</string>
+    <string name="let_us_know_your_experience_5_stars_is_the_best_on_google_play">경험을 알려주세요 — Google Play에서 5점 만점이 최고입니다!</string>
+    <string name="thank_you_for_taking_the_time_to_rate_us_i_m_really_appreciate_that">평가해 주셔서 감사합니다. 정말 고맙습니다!</string>
+    <string name="select_max_4">최소 1개, 최대 4개의 동영상을 선택해 주세요</string>
+    <string name="please_select_a_media_file_at_least_5_seconds_long">최소 5초 이상의 미디어 파일을 선택해 주세요.</string>
+    <string name="please_select_video">최소 1개의 동영상을 선택해 주세요</string>
+    <string name="of_selected">선택됨 %1$d / 4</string>
+    <string name="formart">형식</string>
+    <string name="wav" translatable="false">WAV</string>
+    <string name="aac" translatable="false">AAC</string>
+    <string name="flac" translatable="false">FLAC</string>
+    <string name="ogg" translatable="false">OGG</string>
+    <string name="mp3" translatable="false">MP3</string>
+    <string name="convert">변환</string>
+    <string name="converting">변환 중…</string>
+    <string name="stringnamefiledefault" translatable="false">audio_03092025_xxxxxx</string>
+    <string name="durationspeedaudio" translatable="false">00:17:00</string>
+    <string name="sizespeedaudio" translatable="false">104 kB</string>
+    <string name="notification">알림</string>
+    <string name="usefor">사용 목적</string>
+    <string name="failed_to_set_contact_ringtone">연락처 벨소리 설정 실패</string>
+    <string name="detail">상세 정보</string>
+    <string name="result">결과</string>
+    <string name="play">재생</string>
+    <string name="more">더 보기</string>
+    <string name="duration_result">결과 길이</string>
+    <string name="speed">속도</string>
+    <string name="duration_begin">시작 길이: %s</string>
+    <string name="file_not_ready">파일 준비되지 않음</string>
+    <string name="_0_5" translatable="false">0.5</string>
+    <string name="_0_75" translatable="false">0.75</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_1_25" translatable="false">1.25</string>
+    <string name="_1_5" translatable="false">1.5</string>
+    <string name="_1_75" translatable="false">1.75</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="saving">저장 중</string>
+    <string name="no_files">파일 없음</string>
+    <string name="saving_your_audio_please_wait">오디오 저장 중입니다. 잠시만 기다려 주세요</string>
+    <string name="home">홈</string>
+    <string name="rename_success">이름 변경 완료</string>
+    <string name="share">공유</string>
+    <string name="audiohistory">기록</string>
+    <string name="all">전체</string>
+    <string name="there_are_currently_no_files_here">현재 여기에 파일이 없습니다</string>
+    <string name="audiospeed">오디오 속도</string>
+    <string name="ringtone">벨소리</string>
+    <string name="alarm">알람</string>
+    <string name="contract">연락처</string> <!-- 원문의 "contract"는 "contact" 오타로 가정 -->
+    <string name="cutter">커터</string>
+    <string name="rename">이름 변경</string>
+    <string name="player">플레이어</string>
+    <string name="enter_name">이름 입력</string>
+    <string name="txt_cancel">취소</string>
+    <string name="delete_audio">오디오 삭제</string>
+    <string name="confirm">확인</string>
+    <string name="_0">0%</string>
+    <string name="do_you_want_to_exit_this_screen">이 화면을 종료하시겠습니까?</string>
+    <string name="doyouwantdeletethisfile">이 파일을 삭제하시겠습니까?</string>
+    <string name="format_duration">길이: %1$s</string>
+    <string name="convertion">변환</string>
+    <string name="alert">경고</string>
+    <string name="do_you_want_to_cancel_the_conversion">변환을 취소하시겠습니까?</string>
+    <string name="ok">확인</string>
+    <string name="durationeditspeedaudio" translatable="false">00:08:08</string>
+    <string name="error_occurred_generic">오류가 발생했습니다</string>
+    <string name="please_select_audio_files_with_a_total_duration_of_up_to_30_minutes">총 30분 이내의 오디오 파일을 선택해 주세요</string>
+</resources>

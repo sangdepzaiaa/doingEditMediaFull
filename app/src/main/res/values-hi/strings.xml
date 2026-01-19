@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">मेरी एप्लिकेशन</string>
+    <string name="mp3_cutter">MP3 कटर</string>
+    <string name="text_splash_1">संसाधन लोड हो रहे हैं</string>
+    <string name="text_splash_2">छवि डाउनलोड हो रही है</string>
+    <string name="text_splash_3">त्रुटि संभाल रहा है</string>
+    <string name="text_splash_4">संस्करण अपडेट हो रहा है</string>
+    <string name="no_internet">कोई इंटरनेट नहीं</string>
+    <string name="no_internet_connection">इंटरनेट कनेक्शन नहीं है</string>
+    <string name="please_check_your_internet_connection_and_try_again">कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।</string>
+    <string name="retry">पुनः प्रयास करें</string>
+    <string name="permission">अनुमति</string>
+    <string name="app_name_requires_these_permissions_to_function_properly">%1$s को ठीक से काम करने के लिए इन अनुमतियों की आवश्यकता है।</string>
+    <string name="camera">कैमरा</string>
+    <string name="continue_without_permission">बिना अनुमति के जारी रखें</string>
+    <string name="grant_permission_camera">कैमरा अनुमति दें</string>
+    <string name="titleheaderaudio">बीट ट्रिम करें।\nगर्मी महसूस करें।</string>
+    <string name="cut_now">अभी काटें</string>
+    <string name="speed_audio">ऑडियो गति</string>
+    <string name="thereare">हैं</string>
+    <string name="gotocutter">कटर पर जाएं</string>
+    <string name="setting">सेटिंग्स</string>
+    <string name="server">सर्वर</string>
+    <string name="audio_file_not_available">ऑडियो फाइल उपलब्ध नहीं है</string>
+    <string name="set_as_ringtone_successfully">रिंगटोन के रूप में सफलतापूर्वक सेट किया गया</string>
+    <string name="failed_to_set_as_ringtone">रिंगटोन सेट करने में विफल</string>
+    <string name="set_as_alarm_tone_successfully">अलार्म के रूप में सफलतापूर्वक सेट किया गया</string>
+    <string name="failed_to_set_as_alarm">अलार्म सेट करने में विफल</string>
+    <string name="set_as_notification_successfully">नोटिफिकेशन के रूप में सफलतापूर्वक सेट किया गया</string>
+    <string name="failed_to_set_as_notification">नोटिफिकेशन सेट करने में विफल</string>
+    <string name="set_as_contact_tone_successfully">संपर्क टोन के रूप में सफलतापूर्वक सेट किया गया</string>
+    <string name="setasring">रिंगटोन के रूप में सेट करें</string>
+    <string name="info">जानकारी</string>
+    <string name="folder">फोल्डर</string>
+    <string name="size">आकार</string>
+    <string name="modified">संशोधित</string>
+    <string name="path">पथ</string>
+    <string name="set_as">के रूप में सेट करें</string>
+    <string name="contact">संपर्क</string>
+    <string name="please_enable_modify_system_settings_and_return_to_the_app">कृपया \"सिस्टम सेटिंग्स संशोधित करें\" सक्षम करें और ऐप पर वापस लौटें</string>
+    <string name="cannot_open_settings">सेटिंग्स नहीं खोल सकते</string>
+    <string name="permission_required_to_set_ringtones">रिंगटोन सेट करने के लिए अनुमति आवश्यक है</string>
+    <string name="permission_required_to_set_notifications">नोटिफिकेशन सेट करने के लिए अनुमति आवश्यक है</string>
+    <string name="permission_required_to_set_alarms">अलार्म सेट करने के लिए अनुमति आवश्यक है</string>
+    <string name="permission_required_to_set_contact">संपर्क टोन सेट करने के लिए अनुमति आवश्यक है</string>
+    <string name="allow_system_settings_title">सिस्टम सेटिंग्स संशोधन की अनुमति दें</string>
+    <string name="allow_system_settings">सिस्टम सेटिंग्स संशोधन की अनुमति दें</string>
+    <string name="cannot_open_contacts">संपर्क नहीं खोल सकते</string>
+    <string name="permissions_granted">अनुमतियां प्रदान की गईं</string>
+    <string name="permissions_denied">अनुमतियां अस्वीकार की गईं</string>
+    <string name="permission_is_required">अनुमति आवश्यक है</string>
+    <string name="name">नाम</string>
+    <string name="duration">अवधि</string>
+    <string name="date">तारीख</string>
+    <string name="sorted_by">%1$s के अनुसार क्रमबद्ध</string>
+
+    <plurals name="files_selected">
+        <item quantity="one">%d फाइल चुनी गई</item>
+        <item quantity="other">%d फाइलें चुनी गईं</item>
+    </plurals>
+
+    <string name="txt_sort_order">क्रमबद्ध करने का तरीका:</string>
+    <string name="descending">घटते क्रम में</string>
+    <string name="ascending">बढ़ते क्रम में</string>
+    <string name="txt_save">सहेजें</string>
+    <string name="txt_files">फाइलें</string>
+    <string name="txt_folders">फोल्डर</string>
+    <string name="next">अगला</string>
+    <string name="txt_sort">क्रमबद्ध करें</string>
+    <string name="txt_sorted_by">क्रमबद्ध द्वारा:</string>
+    <string name="saved_audio">सहेजा गया ऑडियो</string>
+    <string name="view_all_history">सभी इतिहास देखें</string>
+    <string name="continue_n">जारी रखें</string>
+    <string name="permission_denied">अनुमति अस्वीकार की गई</string>
+    <string name="go_to_settings">सेटिंग्स पर जाएं</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="permission_camera">कैमरा अनुमति आवश्यक है</string>
+    <string name="permission_camera_message">इस ऐप को फोटो लेने और वीडियो रिकॉर्ड करने के लिए कैमरा एक्सेस की आवश्यकता है। सभी सुविधाओं का उपयोग जारी रखने के लिए कृपया सेटिंग्स में अनुमति दें।</string>
+    <string name="permission_camera_explanation">ऐप को फोटो लेने और वीडियो रिकॉर्ड करने के लिए कैमरा एक्सेस की आवश्यकता है।</string>
+    <string name="grant_permission">अनुमति दें</string>
+    <string name="upload_image">छवि अपलोड करें</string>
+    <string name="select_how_to_upload_images">छवियां अपलोड करने का तरीका चुनें</string>
+    <string name="gallery">गैलरी</string>
+    <string name="error">त्रुटि</string>
+    <string name="no_face_detected">कोई चेहरा नहीं मिला</string>
+    <string name="please_try_again_with_a_frontal_portrait_photo">कृपया फ्रंटल पोर्ट्रेट फोटो के साथ पुनः प्रयास करें</string>
+    <string name="more_than_one_face_detected">एक से अधिक चेहरा मिला</string>
+    <string name="please_try_again_with_a_single_faced_frontal_portrait">कृपया केवल एक चेहरे वाली फ्रंटल पोर्ट्रेट फोटो के साथ पुनः प्रयास करें</string>
+    <string name="upload_image_error">छवि अपलोड त्रुटि</string>
+    <string name="oops_something_went_wrong_please_try_again">ओह! कुछ गलत हो गया। कृपया पुनः प्रयास करें।</string>
+    <string name="try_again">पुनः प्रयास करें</string>
+    <string name="choose_another_photo">दूसरी फोटो चुनें</string>
+    <string name="your_style">चेहरा बदलने के लिए 2 फोटो चुनें</string>
+    <string name="generate">बनाएं</string>
+    <string name="you_want_to_close_dialog">क्या आप इस संवाद को बंद करना चाहते हैं?</string>
+    <string name="yes">हाँ</string>
+    <string name="no">नहीं</string>
+    <string name="update">अपडेट करें</string>
+    <string name="delete">हटाएं</string>
+    <string name="save">सहेजें</string>
+    <string name="select_audio">ऑडियो चुनें</string>
+    <string name="add_file">फाइल जोड़ें</string>
+    <string name="unknown">अज्ञात</string>
+    <string name="videotoaudio">वीडियो से ऑडियो</string>
+    <string name="random">यादृच्छिक</string>
+    <string name="language">भाषा</string>
+    <string name="rating">रेटिंग</string>
+    <string name="feedback">प्रतिक्रिया</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="send">भेजें</string>
+    <string name="enter_your_feedback">अपनी प्रतिक्रिया दर्ज करें</string>
+    <string name="what_tip_you_like_to_give_us">आप हमें कौन सा सुझाव देना चाहेंगे?</string>
+    <string name="your_subject">आपका विषय</string>
+    <string name="choose_your_subject">अपना विषय चुनें</string>
+    <string name="done">हो गया</string>
+    <string name="submit">जमा करें</string>
+    <string name="let_us_know_your_experience_5_stars_is_the_best_on_google_play">हमें अपनी अनुभव बताएं — Google Play पर 5 सितारे सबसे अच्छे हैं!</string>
+    <string name="thank_you_for_taking_the_time_to_rate_us_i_m_really_appreciate_that">हमें रेट करने के लिए समय निकालने के लिए धन्यवाद — मैं वास्तव में इसकी सराहना करता हूँ!</string>
+    <string name="select_max_4">कृपया कम से कम 1 और अधिकतम 4 वीडियो चुनें</string>
+    <string name="please_select_a_media_file_at_least_5_seconds_long">कृपया कम से कम 5 सेकंड लंबी मीडिया फाइल चुनें।</string>
+    <string name="please_select_video">कृपया कम से कम 1 वीडियो चुनें</string>
+    <string name="of_selected">%1$d में से 4 चुने गए</string>
+    <string name="formart">फॉर्मेट</string>
+    <string name="wav" translatable="false">WAV</string>
+    <string name="aac" translatable="false">AAC</string>
+    <string name="flac" translatable="false">FLAC</string>
+    <string name="ogg" translatable="false">OGG</string>
+    <string name="mp3" translatable="false">MP3</string>
+    <string name="convert">कन्वर्ट करें</string>
+    <string name="converting">कन्वर्ट हो रहा है…</string>
+    <string name="stringnamefiledefault" translatable="false">audio_03092025_xxxxxx</string>
+    <string name="durationspeedaudio" translatable="false">00:17:00</string>
+    <string name="sizespeedaudio" translatable="false">104 kB</string>
+    <string name="notification">नोटिफिकेशन</string>
+    <string name="usefor">के लिए उपयोग करें</string>
+    <string name="failed_to_set_contact_ringtone">संपर्क रिंगटोन सेट करने में विफल</string>
+    <string name="detail">विवरण</string>
+    <string name="result">परिणाम</string>
+    <string name="play">चलाएं</string>
+    <string name="more">अधिक</string>
+    <string name="duration_result">परिणाम अवधि</string>
+    <string name="speed">गति</string>
+    <string name="duration_begin">प्रारंभ अवधि: %s</string>
+    <string name="file_not_ready">फाइल तैयार नहीं है</string>
+    <string name="_0_5" translatable="false">0.5</string>
+    <string name="_0_75" translatable="false">0.75</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_1_25" translatable="false">1.25</string>
+    <string name="_1_5" translatable="false">1.5</string>
+    <string name="_1_75" translatable="false">1.75</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="saving">सहेजा जा रहा है</string>
+    <string name="no_files">कोई फाइल नहीं</string>
+    <string name="saving_your_audio_please_wait">आपका ऑडियो सहेजा जा रहा है, कृपया प्रतीक्षा करें</string>
+    <string name="home">होम</string>
+    <string name="rename_success">नाम बदलना सफल</string>
+    <string name="share">शेयर करें</string>
+    <string name="audiohistory">इतिहास</string>
+    <string name="all">सभी</string>
+    <string name="there_are_currently_no_files_here">यहाँ वर्तमान में कोई फाइल नहीं है</string>
+    <string name="audiospeed">ऑडियो गति</string>
+    <string name="ringtone">रिंगटोन</string>
+    <string name="alarm">अलार्म</string>
+    <string name="contract">संपर्क</string> <!-- मूल में "contract" संभवतः typo है, "contact" के लिए -->
+    <string name="cutter">कटर</string>
+    <string name="rename">नाम बदलें</string>
+    <string name="player">प्लेयर</string>
+    <string name="enter_name">नाम दर्ज करें</string>
+    <string name="txt_cancel">रद्द करें</string>
+    <string name="delete_audio">ऑडियो हटाएं</string>
+    <string name="confirm">पुष्टि करें</string>
+    <string name="_0">0%</string>
+    <string name="do_you_want_to_exit_this_screen">क्या आप इस स्क्रीन से बाहर जाना चाहते हैं?</string>
+    <string name="doyouwantdeletethisfile">क्या आप इस फाइल को हटाना चाहते हैं?</string>
+    <string name="format_duration">अवधि: %1$s</string>
+    <string name="convertion">कन्वर्शन</string>
+    <string name="alert">सतर्कता</string>
+    <string name="do_you_want_to_cancel_the_conversion">क्या आप कन्वर्शन रद्द करना चाहते हैं?</string>
+    <string name="ok">ठीक है</string>
+    <string name="durationeditspeedaudio" translatable="false">00:08:08</string>
+    <string name="error_occurred_generic">एक त्रुटि हुई</string>
+    <string name="please_select_audio_files_with_a_total_duration_of_up_to_30_minutes">कृपया कुल 30 मिनट तक की अवधि वाले ऑडियो फाइलें चुनें</string>
+</resources>

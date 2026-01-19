@@ -16,7 +16,7 @@ import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.data.enumm.EditType
 import com.example.myapplication.data.enumm.FormatType
 import com.example.myapplication.data.enumm.MediaFile
-import com.example.myapplication.data.local.dao.history.MediaFileRepository
+import com.example.myapplication.data.repository.MediaFileRepository
 import com.example.myapplication.databinding.ActivitySavingProgressBinding
 import com.example.myapplication.ui.dialog.DialogHelper
 import com.example.myapplication.ui.history.MediaFileAdapter

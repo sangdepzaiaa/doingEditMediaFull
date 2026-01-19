@@ -3,6 +3,7 @@ package com.example.myapplication.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
+import androidx.core.content.edit
 
 object SharePreUtils {
     private const val PREFS = "PREFS"
@@ -17,6 +18,19 @@ object SharePreUtils {
 
     fun setBoolean(context: Context,key: String="",value: Boolean= false): Boolean{
         return pref(context).edit().putBoolean(key,value).commit()
+    }
+
+
+    fun forceRated(context: Context) {
+        val pre = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        pre.edit(commit = true) {
+            putBoolean("rated", true)
+        }
+    }
+
+    fun isRated(context: Context): Boolean {
+        val pre = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        return pre.getBoolean("rated", false)
     }
 }
 // also nhận 1 đối tượng SharedPreferences là it , gán vào sharePrefs

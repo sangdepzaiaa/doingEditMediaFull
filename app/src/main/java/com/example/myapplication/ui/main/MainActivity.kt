@@ -4,16 +4,11 @@ import android.content.Intent
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.net.Uri
-import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
@@ -34,12 +29,10 @@ import com.example.myapplication.utils.tap
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import kotlin.getValue
-import kotlin.text.get
-import kotlin.text.set
 
 class MainActivity : BaseActivity<ActivityMainBinding>(
     inflater = ActivityMainBinding::inflate
-)  {
+) {
     private val vm: MainViewModel by inject()
     private val resultViewmodel: ResultViewModel by inject()
     private val adapter by lazy { SavedAudioAdapter() }
@@ -80,11 +73,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             imgItem1.setImageResource(R.drawable.video_toaudio)
             tvItem1.text = getString(R.string.videotoaudio)
 
-            imgItem2.setImageResource(R.drawable.audio_voice_change)
-            tvItem2.text = getString(R.string.videotoaudio)
+            imgItem2.setImageResource(R.drawable.audio_speed)
+            tvItem2.text = getString(R.string.speed_audio)
 
             imgItem3.setImageResource(R.drawable.audio_text_to_audio)
-            tvItem3.text = getString(R.string.audiospeed)
+            tvItem3.text = getString(R.string.random)
         }
 
 
@@ -99,7 +92,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             startActivity(Intent(this, SettingActivity::class.java))
         }
 
-        binding.layoutHome1.llAudioSpeed.tap {
+        binding.layoutHome1.llSpeedAudio.tap {
             val intent = SelectMediaActivity.newIntent(
                 this,
                 mediaType = MediaType.AUDIO,
@@ -125,8 +118,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                     val textShader = LinearGradient(
                         0f, 0f, 0f, height, // gradient dọc
                         intArrayOf(
-                            ContextCompat.getColor(this@MainActivity, R.color.color_FFF6D5),
-                            ContextCompat.getColor(this@MainActivity, R.color.color_FFD6D5)
+                            ContextCompat.getColor(this@MainActivity, R.color.color_FFB867_00),
+                            ContextCompat.getColor(this@MainActivity, R.color.color_FF0B0B)
                         ),
                         null,
                         Shader.TileMode.CLAMP
@@ -225,5 +218,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             showToast(getString(R.string.cannot_open_contacts))
         }
     }
-
 }

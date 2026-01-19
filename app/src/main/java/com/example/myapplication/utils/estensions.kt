@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -118,6 +119,10 @@ fun Long.formatFileSize(): String {
         kb >= 1 -> String.format("%.1f KB", kb)
         else -> "$this B"
     }
+}
+
+fun Int.dpToPx(): Int {
+    return (this * Resources.getSystem().displayMetrics.density).toInt()
 }
 
 fun generateOutputFileName(

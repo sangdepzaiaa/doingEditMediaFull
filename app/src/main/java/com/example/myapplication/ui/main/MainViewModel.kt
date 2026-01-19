@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.enumm.MediaFile
-import com.example.myapplication.data.local.dao.history.MediaFileRepository
+import com.example.myapplication.data.repository.MediaFileRepository
 import com.example.myapplication.data.local.dao.history.toMediaFile
 import kotlinx.coroutines.launch
 

@@ -35,28 +35,28 @@ class HistoryAudioActivity :
     private val recyclerViews by lazy {
         mapOf(
             0 to binding.rvall,
+            1 to binding.rvaudiospeed,
             2 to binding.rvvideotoaudio,
-            9 to binding.rvaudiospeed
         )
     }
 
     private val adapters by lazy {
-        (0..9).associateWith { MediaFileAdapter() }
+        (0..2).associateWith { MediaFileAdapter() }
     }
 
     // Map LiveData với adapter tương ứng
     private val liveDataAdapterMap by lazy {
         mapOf(
             vm.allHistory to adapters[0],
-            vm.audioCutter to adapters[1],
+            vm.audioSpeed to adapters[1],
             vm.videoToAudio to adapters[2],
-            vm.audioMerge to adapters[3],
-            vm.audioMixer to adapters[4],
-            vm.audioConvert to adapters[5],
-            vm.audioVolume to adapters[6],
-            vm.voiceChange to adapters[7],
-            vm.textToAudio to adapters[8],
-            vm.audioSpeed to adapters[9]
+//            vm.audioMerge to adapters[3],
+//            vm.audioMixer to adapters[4],
+//            vm.audioConvert to adapters[5],
+//            vm.audioVolume to adapters[6],
+//            vm.voiceChange to adapters[7],
+//            vm.textToAudio to adapters[8],
+//            vm.audioSpeed to adapters[9]
         )
     }
 

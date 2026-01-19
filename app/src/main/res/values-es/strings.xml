@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mi Aplicación</string>
+    <string name="mp3_cutter">Cortador de MP3</string>
+    <string name="text_splash_1">Cargando recursos</string>
+    <string name="text_splash_2">Descargando imagen</string>
+    <string name="text_splash_3">Procesando error</string>
+    <string name="text_splash_4">Actualizando versión</string>
+    <string name="no_internet">Sin Internet</string>
+    <string name="no_internet_connection">Sin conexión a Internet</string>
+    <string name="please_check_your_internet_connection_and_try_again">Por favor, verifica tu conexión a Internet e inténtalo de nuevo.</string>
+    <string name="retry">Reintentar</string>
+    <string name="permission">Permiso</string>
+    <string name="app_name_requires_these_permissions_to_function_properly">%1$s requiere estos permisos para funcionar correctamente.</string>
+    <string name="camera">Cámara</string>
+    <string name="continue_without_permission">Continuar sin permiso</string>
+    <string name="grant_permission_camera">Conceder permiso de cámara</string>
+    <string name="titleheaderaudio">Corta el ritmo.\nSiente el calor.</string>
+    <string name="cut_now">Cortar ahora</string>
+    <string name="speed_audio">Velocidad de audio</string>
+    <string name="thereare">Hay</string>
+    <string name="gotocutter">Ir al cortador</string>
+    <string name="setting">Ajustes</string>
+    <string name="server">Servidor</string>
+    <string name="audio_file_not_available">Archivo de audio no disponible</string>
+    <string name="set_as_ringtone_successfully">Establecido como tono de llamada correctamente</string>
+    <string name="failed_to_set_as_ringtone">No se pudo establecer como tono de llamada</string>
+    <string name="set_as_alarm_tone_successfully">Establecido como alarma correctamente</string>
+    <string name="failed_to_set_as_alarm">No se pudo establecer como alarma</string>
+    <string name="set_as_notification_successfully">Establecido como notificación correctamente</string>
+    <string name="failed_to_set_as_notification">No se pudo establecer como notificación</string>
+    <string name="set_as_contact_tone_successfully">Establecido como tono de contacto correctamente</string>
+    <string name="setasring">Establecer como tono de llamada</string>
+    <string name="info">Información</string>
+    <string name="folder">Carpeta</string>
+    <string name="size">Tamaño</string>
+    <string name="modified">Modificado</string>
+    <string name="path">Ruta</string>
+    <string name="set_as">Establecer como</string>
+    <string name="contact">Contacto</string>
+    <string name="please_enable_modify_system_settings_and_return_to_the_app">Por favor, activa \"Modificar ajustes del sistema\" y regresa a la app</string>
+    <string name="cannot_open_settings">No se pueden abrir los ajustes</string>
+    <string name="permission_required_to_set_ringtones">Se requiere permiso para establecer tonos de llamada</string>
+    <string name="permission_required_to_set_notifications">Se requiere permiso para establecer notificaciones</string>
+    <string name="permission_required_to_set_alarms">Se requiere permiso para establecer alarmas</string>
+    <string name="permission_required_to_set_contact">Se requiere permiso para establecer tono de contacto</string>
+    <string name="allow_system_settings_title">Permitir modificación de ajustes del sistema</string>
+    <string name="allow_system_settings">Permitir modificación de ajustes del sistema</string>
+    <string name="cannot_open_contacts">No se pueden abrir los contactos</string>
+    <string name="permissions_granted">Permisos concedidos</string>
+    <string name="permissions_denied">Permisos denegados</string>
+    <string name="permission_is_required">Se requiere permiso</string>
+    <string name="name">Nombre</string>
+    <string name="duration">Duración</string>
+    <string name="date">Fecha</string>
+    <string name="sorted_by">Ordenado por %1$s</string>
+    <plurals name="files_selected">
+        <item quantity="one">%d archivo seleccionado</item>
+        <item quantity="other">%d archivos seleccionados</item>
+    </plurals>
+    <string name="txt_sort_order">Orden de clasificación:</string>
+    <string name="descending">Descendente</string>
+    <string name="ascending">Ascendente</string>
+    <string name="txt_save">Guardar</string>
+    <string name="txt_files">Archivos</string>
+    <string name="txt_folders">Carpetas</string>
+    <string name="next">Siguiente</string>
+    <string name="txt_sort">Ordenar</string>
+    <string name="txt_sorted_by">Ordenado por:</string>
+    <string name="saved_audio">Audio guardado</string>
+    <string name="view_all_history">Ver todo el historial</string>
+    <string name="continue_n">Continuar</string>
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="go_to_settings">Ir a Ajustes</string>
+    <string name="cancel">Cancelar</string>
+    <string name="permission_camera">Permiso de cámara requerido</string>
+    <string name="permission_camera_message">Esta aplicación necesita acceso a la cámara para tomar fotos y grabar videos. Por favor, concede el permiso en ajustes para continuar usando todas las funciones.</string>
+    <string name="permission_camera_explanation">La aplicación requiere acceso a la cámara para que puedas tomar fotos y grabar videos.</string>
+    <string name="grant_permission">Conceder permiso</string>
+    <string name="upload_image">Subir imagen</string>
+    <string name="select_how_to_upload_images">Selecciona cómo subir imágenes</string>
+    <string name="gallery">Galería</string>
+    <string name="error">Error</string>
+    <string name="no_face_detected">No se detectó ningún rostro</string>
+    <string name="please_try_again_with_a_frontal_portrait_photo">Por favor, inténtalo de nuevo con una foto de retrato frontal</string>
+    <string name="more_than_one_face_detected">Se detectó más de un rostro</string>
+    <string name="please_try_again_with_a_single_faced_frontal_portrait">Por favor, inténtalo de nuevo con una foto frontal de un solo rostro</string>
+    <string name="upload_image_error">Error al subir la imagen</string>
+    <string name="oops_something_went_wrong_please_try_again">¡Ups! Algo salió mal. Por favor, inténtalo de nuevo.</string>
+    <string name="try_again">Intentar de nuevo</string>
+    <string name="choose_another_photo">Elegir otra foto</string>
+    <string name="your_style">Elige 2 fotos para intercambiar rostros</string>
+    <string name="generate">Generar</string>
+    <string name="you_want_to_close_dialog">¿Quieres cerrar este diálogo?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="update">Actualizar</string>
+    <string name="delete">Eliminar</string>
+    <string name="save">Guardar</string>
+    <string name="select_audio">Seleccionar audio</string>
+    <string name="add_file">Añadir archivo</string>
+    <string name="unknown">Desconocido</string>
+    <string name="videotoaudio">Video a audio</string>
+    <string name="random">Aleatorio</string>
+    <string name="language">Idioma</string>
+    <string name="rating">Calificación</string>
+    <string name="feedback">Comentarios</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="send">Enviar</string>
+    <string name="enter_your_feedback">Ingresa tus comentarios</string>
+    <string name="what_tip_you_like_to_give_us">¿Qué sugerencia te gustaría darnos?</string>
+    <string name="your_subject">Tu asunto</string>
+    <string name="choose_your_subject">Elige tu asunto</string>
+    <string name="done">Listo</string>
+    <string name="submit">Enviar</string>
+    <string name="let_us_know_your_experience_5_stars_is_the_best_on_google_play">Cuéntanos tu experiencia — ¡5 estrellas es lo mejor en Google Play!</string>
+    <string name="thank_you_for_taking_the_time_to_rate_us_i_m_really_appreciate_that">¡Gracias por tomarte el tiempo de calificarnos! Realmente lo aprecio.</string>
+    <string name="select_max_4">Por favor, selecciona al menos 1 y máximo 4 videos</string>
+    <string name="please_select_a_media_file_at_least_5_seconds_long">Por favor, selecciona un archivo multimedia de al menos 5 segundos de duración.</string>
+    <string name="please_select_video">Por favor, selecciona al menos 1 video</string>
+    <string name="of_selected">%1$d de 4 seleccionados</string>
+    <string name="formart">Formato</string>
+    <string name="wav" translatable="false">WAV</string>
+    <string name="aac" translatable="false">AAC</string>
+    <string name="flac" translatable="false">FLAC</string>
+    <string name="ogg" translatable="false">OGG</string>
+    <string name="mp3" translatable="false">MP3</string>
+    <string name="convert">Convertir</string>
+    <string name="converting">Convirtiendo…</string>
+    <string name="stringnamefiledefault" translatable="false">audio_03092025_xxxxxx</string>
+    <string name="durationspeedaudio" translatable="false">00:17:00</string>
+    <string name="sizespeedaudio" translatable="false">104 kB</string>
+    <string name="notification">Notificación</string>
+    <string name="usefor">Usar para</string>
+    <string name="failed_to_set_contact_ringtone">No se pudo establecer el tono de contacto</string>
+    <string name="detail">Detalles</string>
+    <string name="result">Resultado</string>
+    <string name="play">Reproducir</string>
+    <string name="more">Más</string>
+    <string name="duration_result">Duración del resultado</string>
+    <string name="speed">Velocidad</string>
+    <string name="duration_begin">Duración inicial: %s</string>
+    <string name="file_not_ready">Archivo no listo</string>
+    <string name="_0_5" translatable="false">0.5</string>
+    <string name="_0_75" translatable="false">0.75</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_1_25" translatable="false">1.25</string>
+    <string name="_1_5" translatable="false">1.5</string>
+    <string name="_1_75" translatable="false">1.75</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="saving">Guardando</string>
+    <string name="no_files">Sin archivos</string>
+    <string name="saving_your_audio_please_wait">Guardando tu audio, por favor espera</string>
+    <string name="home">Inicio</string>
+    <string name="rename_success">Renombrado correctamente</string>
+    <string name="share">Compartir</string>
+    <string name="audiohistory">Historial</string>
+    <string name="all">Todos</string>
+    <string name="there_are_currently_no_files_here">Actualmente no hay archivos aquí</string>
+    <string name="audiospeed">Velocidad de audio</string>
+    <string name="ringtone">Tono de llamada</string>
+    <string name="alarm">Alarma</string>
+    <string name="contract">Contacto</string> <!-- asumiendo que era typo por "contact" -->
+    <string name="cutter">Cortador</string>
+    <string name="rename">Renombrar</string>
+    <string name="player">Reproductor</string>
+    <string name="enter_name">Ingresa el nombre</string>
+    <string name="txt_cancel">Cancelar</string>
+    <string name="delete_audio">Eliminar audio</string>
+    <string name="confirm">Confirmar</string>
+    <string name="_0">0 %</string>
+    <string name="do_you_want_to_exit_this_screen">¿Quieres salir de esta pantalla?</string>
+    <string name="doyouwantdeletethisfile">¿Quieres eliminar este archivo?</string>
+    <string name="format_duration">Duración: %1$s</string>
+    <string name="convertion">Conversión</string>
+    <string name="alert">Alerta</string>
+    <string name="do_you_want_to_cancel_the_conversion">¿Quieres cancelar la conversión?</string>
+    <string name="ok">Aceptar</string>
+    <string name="durationeditspeedaudio" translatable="false">00:08:08</string>
+    <string name="error_occurred_generic">Ocurrió un error</string>
+    <string name="please_select_audio_files_with_a_total_duration_of_up_to_30_minutes">Por favor, selecciona archivos de audio con una duración total de hasta 30 minutos</string>
+</resources>

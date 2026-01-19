@@ -23,7 +23,7 @@ import com.example.myapplication.R
 import com.example.myapplication.base.BaseDialog
 import com.example.myapplication.data.enumm.MediaFile
 import com.example.myapplication.data.enumm.PermissionType
-import com.example.myapplication.data.local.dao.history.MediaFileRepository
+import com.example.myapplication.data.repository.MediaFileRepository
 import com.example.myapplication.databinding.DialogAudioOptionsBinding
 import com.example.myapplication.databinding.DialogConfirmExitBinding
 import com.example.myapplication.databinding.DialogDeleteResultBinding

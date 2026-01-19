@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">マイアプリケーション</string>
+    <string name="mp3_cutter">MP3カッター</string>
+    <string name="text_splash_1">リソースを読み込み中</string>
+    <string name="text_splash_2">画像をダウンロード中</string>
+    <string name="text_splash_3">エラーを処理中</string>
+    <string name="text_splash_4">バージョンを更新中</string>
+    <string name="no_internet">インターネットなし</string>
+    <string name="no_internet_connection">インターネット接続がありません</string>
+    <string name="please_check_your_internet_connection_and_try_again">インターネット接続を確認して、もう一度お試しください。</string>
+    <string name="retry">再試行</string>
+    <string name="permission">権限</string>
+    <string name="app_name_requires_these_permissions_to_function_properly">%1$s を正常に動作させるために、これらの権限が必要です。</string>
+    <string name="camera">カメラ</string>
+    <string name="continue_without_permission">権限なしで続行</string>
+    <string name="grant_permission_camera">カメラの権限を許可</string>
+    <string name="titleheaderaudio">ビートをトリム。\n熱を感じて。</string>
+    <string name="cut_now">今すぐカット</string>
+    <string name="speed_audio">オーディオ速度</string>
+    <string name="thereare">あります</string>
+    <string name="gotocutter">カッターへ移動</string>
+    <string name="setting">設定</string>
+    <string name="server">サーバー</string>
+    <string name="audio_file_not_available">オーディオファイルが利用できません</string>
+    <string name="set_as_ringtone_successfully">着信音として設定しました</string>
+    <string name="failed_to_set_as_ringtone">着信音の設定に失敗しました</string>
+    <string name="set_as_alarm_tone_successfully">アラームとして設定しました</string>
+    <string name="failed_to_set_as_alarm">アラームの設定に失敗しました</string>
+    <string name="set_as_notification_successfully">通知音として設定しました</string>
+    <string name="failed_to_set_as_notification">通知音の設定に失敗しました</string>
+    <string name="set_as_contact_tone_successfully">連絡先の着信音として設定しました</string>
+    <string name="setasring">着信音に設定</string>
+    <string name="info">情報</string>
+    <string name="folder">フォルダ</string>
+    <string name="size">サイズ</string>
+    <string name="modified">変更日</string>
+    <string name="path">パス</string>
+    <string name="set_as">として設定</string>
+    <string name="contact">連絡先</string>
+    <string name="please_enable_modify_system_settings_and_return_to_the_app">「システム設定の変更」を有効にして、アプリに戻ってください</string>
+    <string name="cannot_open_settings">設定を開けません</string>
+    <string name="permission_required_to_set_ringtones">着信音を設定するための権限が必要です</string>
+    <string name="permission_required_to_set_notifications">通知を設定するための権限が必要です</string>
+    <string name="permission_required_to_set_alarms">アラームを設定するための権限が必要です</string>
+    <string name="permission_required_to_set_contact">連絡先の着信音を設定するための権限が必要です</string>
+    <string name="allow_system_settings_title">システム設定の変更を許可</string>
+    <string name="allow_system_settings">システム設定の変更を許可</string>
+    <string name="cannot_open_contacts">連絡先を開けません</string>
+    <string name="permissions_granted">権限が許可されました</string>
+    <string name="permissions_denied">権限が拒否されました</string>
+    <string name="permission_is_required">権限が必要です</string>
+    <string name="name">名前</string>
+    <string name="duration">長さ</string>
+    <string name="date">日付</string>
+    <string name="sorted_by">%1$s で並べ替え</string>
+
+    <plurals name="files_selected">
+        <item quantity="other">%d ファイル選択済み</item>
+    </plurals>
+
+    <string name="txt_sort_order">並べ替え順:</string>
+    <string name="descending">降順</string>
+    <string name="ascending">昇順</string>
+    <string name="txt_save">保存</string>
+    <string name="txt_files">ファイル</string>
+    <string name="txt_folders">フォルダ</string>
+    <string name="next">次へ</string>
+    <string name="txt_sort">並べ替え</string>
+    <string name="txt_sorted_by">並べ替え基準:</string>
+    <string name="saved_audio">保存したオーディオ</string>
+    <string name="view_all_history">すべての履歴を表示</string>
+    <string name="continue_n">続行</string>
+    <string name="permission_denied">権限が拒否されました</string>
+    <string name="go_to_settings">設定へ移動</string>
+    <string name="cancel">キャンセル</string>
+    <string name="permission_camera">カメラ権限が必要です</string>
+    <string name="permission_camera_message">このアプリは写真撮影と動画録画のためにカメラへのアクセスが必要です。すべての機能を使用するには、設定で権限を許可してください。</string>
+    <string name="permission_camera_explanation">アプリは写真を撮ったり動画を録画したりするためにカメラへのアクセスが必要です。</string>
+    <string name="grant_permission">権限を許可</string>
+    <string name="upload_image">画像をアップロード</string>
+    <string name="select_how_to_upload_images">画像のアップロード方法を選択</string>
+    <string name="gallery">ギャラリー</string>
+    <string name="error">エラー</string>
+    <string name="no_face_detected">顔が検出されませんでした</string>
+    <string name="please_try_again_with_a_frontal_portrait_photo">正面のポートレート写真で再度お試しください</string>
+    <string name="more_than_one_face_detected">複数の顔が検出されました</string>
+    <string name="please_try_again_with_a_single_faced_frontal_portrait">1つの顔だけの正面ポートレート写真で再度お試しください</string>
+    <string name="upload_image_error">画像アップロードエラー</string>
+    <string name="oops_something_went_wrong_please_try_again">おっと！何か問題が発生しました。もう一度お試しください。</string>
+    <string name="try_again">再試行</string>
+    <string name="choose_another_photo">別の写真を選択</string>
+    <string name="your_style">顔を入れ替えるために2枚の写真を選択してください</string>
+    <string name="generate">生成</string>
+    <string name="you_want_to_close_dialog">このダイアログを閉じますか？</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+    <string name="update">更新</string>
+    <string name="delete">削除</string>
+    <string name="save">保存</string>
+    <string name="select_audio">オーディオを選択</string>
+    <string name="add_file">ファイルを追加</string>
+    <string name="unknown">不明</string>
+    <string name="videotoaudio">動画からオーディオ</string>
+    <string name="random">ランダム</string>
+    <string name="language">言語</string>
+    <string name="rating">評価</string>
+    <string name="feedback">フィードバック</string>
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="send">送信</string>
+    <string name="enter_your_feedback">フィードバックを入力してください</string>
+    <string name="what_tip_you_like_to_give_us">どのようなご意見をお寄せいただけますか？</string>
+    <string name="your_subject">件名</string>
+    <string name="choose_your_subject">件名を選択</string>
+    <string name="done">完了</string>
+    <string name="submit">送信</string>
+    <string name="let_us_know_your_experience_5_stars_is_the_best_on_google_play">ご感想をお聞かせください — Google Play で 5つ星が最高です！</string>
+    <string name="thank_you_for_taking_the_time_to_rate_us_i_m_really_appreciate_that">評価していただきありがとうございます。本当に感謝しています！</string>
+    <string name="select_max_4">最低1つ、最大4つの動画を選択してください</string>
+    <string name="please_select_a_media_file_at_least_5_seconds_long">最低5秒以上のメディアファイルを選択してください。</string>
+    <string name="please_select_video">最低1つの動画を選択してください</string>
+    <string name="of_selected">選択済み %1$d / 4</string>
+    <string name="formart">フォーマット</string>
+    <string name="wav" translatable="false">WAV</string>
+    <string name="aac" translatable="false">AAC</string>
+    <string name="flac" translatable="false">FLAC</string>
+    <string name="ogg" translatable="false">OGG</string>
+    <string name="mp3" translatable="false">MP3</string>
+    <string name="convert">変換</string>
+    <string name="converting">変換中…</string>
+    <string name="stringnamefiledefault" translatable="false">audio_03092025_xxxxxx</string>
+    <string name="durationspeedaudio" translatable="false">00:17:00</string>
+    <string name="sizespeedaudio" translatable="false">104 kB</string>
+    <string name="notification">通知</string>
+    <string name="usefor">使用目的</string>
+    <string name="failed_to_set_contact_ringtone">連絡先の着信音を設定できませんでした</string>
+    <string name="detail">詳細</string>
+    <string name="result">結果</string>
+    <string name="play">再生</string>
+    <string name="more">もっと見る</string>
+    <string name="duration_result">結果の長さ</string>
+    <string name="speed">速度</string>
+    <string name="duration_begin">開始長さ: %s</string>
+    <string name="file_not_ready">ファイルの準備ができていません</string>
+    <string name="_0_5" translatable="false">0.5</string>
+    <string name="_0_75" translatable="false">0.75</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_1_25" translatable="false">1.25</string>
+    <string name="_1_5" translatable="false">1.5</string>
+    <string name="_1_75" translatable="false">1.75</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="saving">保存中</string>
+    <string name="no_files">ファイルがありません</string>
+    <string name="saving_your_audio_please_wait">オーディオを保存中です。お待ちください</string>
+    <string name="home">ホーム</string>
+    <string name="rename_success">名前の変更が成功しました</string>
+    <string name="share">共有</string>
+    <string name="audiohistory">履歴</string>
+    <string name="all">すべて</string>
+    <string name="there_are_currently_no_files_here">現在、ここにファイルはありません</string>
+    <string name="audiospeed">オーディオ速度</string>
+    <string name="ringtone">着信音</string>
+    <string name="alarm">アラーム</string>
+    <string name="contract">連絡先</string> <!-- 原語の typo と思われ "contact" の意 -->
+    <string name="cutter">カッター</string>
+    <string name="rename">名前を変更</string>
+    <string name="player">プレーヤー</string>
+    <string name="enter_name">名前を入力</string>
+    <string name="txt_cancel">キャンセル</string>
+    <string name="delete_audio">オーディオを削除</string>
+    <string name="confirm">確認</string>
+    <string name="_0">0%</string>
+    <string name="do_you_want_to_exit_this_screen">この画面を終了しますか？</string>
+    <string name="doyouwantdeletethisfile">このファイルを削除しますか？</string>
+    <string name="format_duration">長さ: %1$s</string>
+    <string name="convertion">変換</string>
+    <string name="alert">警告</string>
+    <string name="do_you_want_to_cancel_the_conversion">変換をキャンセルしますか？</string>
+    <string name="ok">OK</string>
+    <string name="durationeditspeedaudio" translatable="false">00:08:08</string>
+    <string name="error_occurred_generic">エラーが発生しました</string>
+    <string name="please_select_audio_files_with_a_total_duration_of_up_to_30_minutes">合計30分以内のオーディオファイルを選択してください</string>
+</resources>

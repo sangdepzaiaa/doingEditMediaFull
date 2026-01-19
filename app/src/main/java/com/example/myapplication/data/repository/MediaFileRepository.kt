@@ -1,7 +1,8 @@
-package com.example.myapplication.data.local.dao.history
+package com.example.myapplication.data.repository
 
 import com.example.myapplication.data.enumm.EditType
 import com.example.myapplication.data.enumm.MediaType
+import com.example.myapplication.data.local.dao.history.MediaEntity
 import java.io.File
 
 interface MediaFileRepository {

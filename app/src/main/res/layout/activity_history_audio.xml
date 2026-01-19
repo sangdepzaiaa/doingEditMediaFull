@@ -41,16 +41,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/figtree_semi_bold"
-            android:text="@string/videotoaudio"
-            android:textColor="@color/color_000000_7" />
+            android:text="@string/audiospeed"
+            android:textColor="@color/black" />
 
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/figtree_semi_bold"
-            android:text="@string/audiospeed"
-            android:textColor="@color/color_000000_7" />
+            android:text="@string/videotoaudio"
+            android:textColor="@color/black" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView

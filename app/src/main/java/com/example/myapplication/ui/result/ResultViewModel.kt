@@ -3,7 +3,7 @@ package com.example.myapplication.ui.result
 import android.util.Log
 import com.example.myapplication.base.BaseViewModel
 import com.example.myapplication.data.enumm.MediaFile
-import com.example.myapplication.data.local.dao.history.MediaFileRepository
+import com.example.myapplication.data.repository.MediaFileRepository
 import com.example.myapplication.utils.toMediaEntry
 
 private const val TAG = "ResultViewModel"

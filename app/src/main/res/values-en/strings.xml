@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="mp3_cutter">MP3 Cutter</string>
+    <string name="text_splash_1">Loading resources</string>
+    <string name="text_splash_2">Downloading image</string>
+    <string name="text_splash_3">Handling error</string>
+    <string name="text_splash_4">Updating version</string>
+    <string name="no_internet">No Internet</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="please_check_your_internet_connection_and_try_again">Please check your internet connection and try again.</string>
+    <string name="retry">Retry</string>
+    <string name="permission">Permission</string>
+    <string name="app_name_requires_these_permissions_to_function_properly">%1$s requires these permissions to function properly.</string>
+    <string name="camera">Camera</string>
+    <string name="continue_without_permission">Continue without permission</string>
+    <string name="grant_permission_camera">Grant camera permission</string>
+    <string name="titleheaderaudio">Trim the Beat.\nFeel the Heat.</string>
+    <string name="cut_now">Cut Now</string>
+    <string name="speed_audio">Audio Speed</string>
+    <string name="thereare">There are</string>
+    <string name="gotocutter">Go to Cutter</string>
+    <string name="setting">Settings</string>
+    <string name="server">Server</string>
+    <string name="audio_file_not_available">Audio file not available</string>
+    <string name="set_as_ringtone_successfully">Set as ringtone successfully</string>
+    <string name="failed_to_set_as_ringtone">Failed to set as ringtone</string>
+    <string name="set_as_alarm_tone_successfully">Set as alarm successfully</string>
+    <string name="failed_to_set_as_alarm">Failed to set as alarm</string>
+    <string name="set_as_notification_successfully">Set as notification successfully</string>
+    <string name="failed_to_set_as_notification">Failed to set as notification</string>
+    <string name="set_as_contact_tone_successfully">Set as contact ringtone successfully</string>
+    <string name="setasring">Set as Ringtone</string>
+    <string name="info">Info</string>
+    <string name="folder">Folder</string>
+    <string name="size">Size</string>
+    <string name="modified">Modified</string>
+    <string name="path">Path</string>
+    <string name="set_as">Set as</string>
+    <string name="contact">Contact</string>
+    <string name="please_enable_modify_system_settings_and_return_to_the_app">Please enable \"Modify system settings\" and return to the app</string>
+    <string name="cannot_open_settings">Cannot open settings</string>
+    <string name="permission_required_to_set_ringtones">Permission required to set ringtones</string>
+    <string name="permission_required_to_set_notifications">Permission required to set notifications</string>
+    <string name="permission_required_to_set_alarms">Permission required to set alarms</string>
+    <string name="permission_required_to_set_contact">Permission required to set contact ringtone</string>
+    <string name="allow_system_settings_title">Allow modifying system settings</string>
+    <string name="allow_system_settings">Allow system settings modification</string>
+    <string name="cannot_open_contacts">Cannot open contacts</string>
+    <string name="permissions_granted">Permissions granted</string>
+    <string name="permissions_denied">Permissions denied</string>
+    <string name="permission_is_required">Permission is required</string>
+    <string name="name">Name</string>
+    <string name="duration">Duration</string>
+    <string name="date">Date</string>
+    <string name="sorted_by">Sorted by %1$s</string>
+    <plurals name="files_selected">
+        <item quantity="one">%d file selected</item>
+        <item quantity="other">%d files selected</item>
+    </plurals>
+    <string name="txt_sort_order">Sort order:</string>
+    <string name="descending">Descending</string>
+    <string name="ascending">Ascending</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_files">Files</string>
+    <string name="txt_folders">Folders</string>
+    <string name="next">Next</string>
+    <string name="txt_sort">Sort</string>
+    <string name="txt_sorted_by">Sorted by:</string>
+    <string name="saved_audio">Saved Audio</string>
+    <string name="view_all_history">View All History</string>
+    <string name="continue_n">Continue</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="permission_camera">Camera Permission Required</string>
+    <string name="permission_camera_message">This app needs camera access to take photos and record videos. Please grant permission in settings to continue using all features.</string>
+    <string name="permission_camera_explanation">This app requires camera access so you can take photos and record videos.</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="select_how_to_upload_images">Select how to upload images</string>
+    <string name="gallery">Gallery</string>
+    <string name="error">Error</string>
+    <string name="no_face_detected">No face detected</string>
+    <string name="please_try_again_with_a_frontal_portrait_photo">Please try again with a frontal portrait photo</string>
+    <string name="more_than_one_face_detected">More than one face detected</string>
+    <string name="please_try_again_with_a_single_faced_frontal_portrait">Please try again with a single-face frontal portrait</string>
+    <string name="upload_image_error">Upload Image Error</string>
+    <string name="oops_something_went_wrong_please_try_again">Oops! Something went wrong. Please try again.</string>
+    <string name="try_again">Try Again</string>
+    <string name="choose_another_photo">Choose another photo</string>
+    <string name="your_style">Choose 2 photos to swap faces</string>
+    <string name="generate">Generate</string>
+    <string name="you_want_to_close_dialog">Do you want to close this dialog?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="select_audio">Select Audio</string>
+    <string name="add_file">Add File</string>
+    <string name="unknown">Unknown</string>
+    <string name="videotoaudio">Video to Audio</string>
+    <string name="random">Random</string>
+    <string name="language">Language</string>
+    <string name="rating">Rating</string>
+    <string name="feedback">Feedback</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="send">Send</string>
+    <string name="enter_your_feedback">Enter your feedback</string>
+    <string name="what_tip_you_like_to_give_us">What tip would you like to give us?</string>
+    <string name="your_subject">Your subject</string>
+    <string name="choose_your_subject">Choose your subject</string>
+    <string name="done">Done</string>
+    <string name="submit">Submit</string>
+    <string name="let_us_know_your_experience_5_stars_is_the_best_on_google_play">Let us know your experience — 5 stars is the best on Google Play!</string>
+    <string name="thank_you_for_taking_the_time_to_rate_us_i_m_really_appreciate_that">Thank you for taking the time to rate us — I really appreciate it!</string>
+    <string name="select_max_4">Please select at least 1 and at most 4 videos</string>
+    <string name="please_select_a_media_file_at_least_5_seconds_long">Please select a media file that is at least 5 seconds long.</string>
+    <string name="please_select_video">Please select at least 1 video</string>
+    <string name="of_selected">%1$d of 4 selected</string>
+    <string name="formart">Format</string>
+    <string name="wav" translatable="false">WAV</string>
+    <string name="aac" translatable="false">AAC</string>
+    <string name="flac" translatable="false">FLAC</string>
+    <string name="ogg" translatable="false">OGG</string>
+    <string name="mp3" translatable="false">MP3</string>
+    <string name="convert">Convert</string>
+    <string name="converting">Converting…</string>
+    <string name="stringnamefiledefault" translatable="false">audio_03092025_xxxxxx</string>
+    <string name="durationspeedaudio" translatable="false">00:17:00</string>
+    <string name="sizespeedaudio" translatable="false">104 kB</string>
+    <string name="notification">Notification</string>
+    <string name="usefor">Use for</string>
+    <string name="failed_to_set_contact_ringtone">Failed to set contact ringtone</string>
+    <string name="detail">Detail</string>
+    <string name="result">Result</string>
+    <string name="play">Play</string>
+    <string name="more">More</string>
+    <string name="duration_result">Result duration</string>
+    <string name="speed">Speed</string>
+    <string name="duration_begin">Start duration: %s</string>
+    <string name="file_not_ready">File not ready</string>
+    <string name="_0_5" translatable="false">0.5</string>
+    <string name="_0_75" translatable="false">0.75</string>
+    <string name="_1" translatable="false">1</string>
+    <string name="_1_25" translatable="false">1.25</string>
+    <string name="_1_5" translatable="false">1.5</string>
+    <string name="_1_75" translatable="false">1.75</string>
+    <string name="_2" translatable="false">2</string>
+    <string name="saving">Saving</string>
+    <string name="no_files">No files</string>
+    <string name="saving_your_audio_please_wait">Saving your audio, please wait</string>
+    <string name="home">Home</string>
+    <string name="rename_success">Rename successful</string>
+    <string name="share">Share</string>
+    <string name="audiohistory">History</string>
+    <string name="all">All</string>
+    <string name="there_are_currently_no_files_here">There are currently no files here</string>
+    <string name="audiospeed">Audio Speed</string>
+    <string name="ringtone">Ringtone</string>
+    <string name="alarm">Alarm</string>
+    <string name="contract">Contact</string> <!-- assuming typo in original; changed to "contact" -->
+    <string name="cutter">Cutter</string>
+    <string name="rename">Rename</string>
+    <string name="player">Player</string>
+    <string name="enter_name">Enter name</string>
+    <string name="txt_cancel">Cancel</string>
+    <string name="delete_audio">Delete Audio</string>
+    <string name="confirm">Confirm</string>
+    <string name="_0">0%</string>
+    <string name="do_you_want_to_exit_this_screen">Do you want to exit this screen?</string>
+    <string name="doyouwantdeletethisfile">Do you want to delete this file?</string>
+    <string name="format_duration">Duration: %1$s</string>
+    <string name="convertion">Conversion</string>
+    <string name="alert">Alert</string>
+    <string name="do_you_want_to_cancel_the_conversion">Do you want to cancel the conversion?</string>
+    <string name="ok">OK</string>
+    <string name="durationeditspeedaudio" translatable="false">00:08:08</string>
+    <string name="error_occurred_generic">An error occurred</string>
+    <string name="please_select_audio_files_with_a_total_duration_of_up_to_30_minutes">Please select audio files with a total duration of up to 30 minutes</string>
+</resources>

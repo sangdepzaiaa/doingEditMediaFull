@@ -9,7 +9,11 @@ object const {
 
     const val EXTRA_SELECTED_URIS = "selected_videos"
     const val EXTRA_MEDIA_TYPE = "EXTRA_MEDIA_TYPE"
+    const val UPDATED_MEDIA_FILES = "UPDATED_MEDIA_FILES"
+    const val KEY_LANGUAGE = "KEY_LANGUAGE"
 
+    const val POLICY_URL: String =
+        "https://sites.google.com/d/1yo5-L4rU2Q7ecyTb7cEv6KPJkkOAFNzw/p/1fYGLVuAqucyi303t2vuc1-BIE8TCxJ-s/edit"
 
     const val EXTRA_MEDIA_FILES = "EXTRA_MEDIA_FILES"
 

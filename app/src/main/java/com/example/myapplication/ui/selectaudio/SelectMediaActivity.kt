@@ -22,10 +22,23 @@ import com.example.myapplication.data.enumm.EditType
 import com.example.myapplication.data.enumm.MediaFile
 import com.example.myapplication.data.enumm.MediaType
 import com.example.myapplication.data.enumm.SelectionMode
+import com.example.myapplication.data.enumm.SortCriteria
+import com.example.myapplication.data.enumm.SortOrder
 import com.example.myapplication.databinding.ActivitySelectMediaBinding
+import com.example.myapplication.ui.dialog.SortDialog
+import com.example.myapplication.ui.selectaudio.adapter.MediaFileAdapter
+import com.example.myapplication.ui.selectaudio.adapter.MediaFolderAdapter
+import com.example.myapplication.ui.selectaudio.view_model.MediaScreenState
+import com.example.myapplication.ui.selectaudio.view_model.MediaViewModel
+import com.example.myapplication.ui.speed_audio.EditSpeedAudioActivity
 import com.example.myapplication.utils.const.EDIT_TYPE
 import com.example.myapplication.utils.const.EXTRA_MEDIA_TYPE
+import com.example.myapplication.utils.const.MAX_TOTAL_SELECTION_DURATION_MS
+import com.example.myapplication.utils.const.MIN_SELECTED_MEDIA_DURATION_MS
+import com.example.myapplication.utils.const.UPDATED_MEDIA_FILES
 import com.example.myapplication.utils.getSerializableCompat
+import com.example.myapplication.utils.showToast
+import com.example.myapplication.utils.tap
 import com.google.android.material.tabs.TabLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -43,13 +56,17 @@ class SelectMediaActivity : BaseActivity<ActivitySelectMediaBinding>(
     private lateinit var filesAdapter: MediaFileAdapter
     private lateinit var foldersAdapter: MediaFolderAdapter
     private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            if (permissions.entries.all { it.value }) {
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+
+            val granted = permissions.values.any { it }
+
+            if (granted) {
                 loadInitialData()
             } else {
-                Toast.makeText(this, getString(R.string.permission_is_required), Toast.LENGTH_LONG)
-                    .show()
-                finish()
+                showToast(getString(R.string.permission_is_required))
+                // ❌ KHÔNG finish
             }
         }
 
@@ -90,9 +107,9 @@ class SelectMediaActivity : BaseActivity<ActivitySelectMediaBinding>(
             else -> SelectionMode.SINGLE
         }
         mediaType = intent.getSerializableCompat(EXTRA_MEDIA_TYPE) as? MediaType ?: MediaType.AUDIO
-        viewBinding.toolbar.tvTitle.text = getString(R.string.select_audio)
-        viewBinding.toolbar.ivRightIcon1.visibility = View.GONE
-        viewBinding.toolbar.ivRightIcon2.visibility = View.GONE
+        binding.toolbar.tvTitle.text = getString(R.string.select_audio)
+        binding.toolbar.ivRightIcon1.visibility = View.GONE
+        binding.toolbar.ivRightIcon2.visibility = View.GONE
         setupAdapters()
         setupTabs()
         setupSorting()
@@ -104,34 +121,35 @@ class SelectMediaActivity : BaseActivity<ActivitySelectMediaBinding>(
         checkAndRequestPermissions()
     }
 
-    override fun bindViewModel() {
+    override fun bindViewmodel() {
+        super.bindViewmodel()
         viewModel.uiState.observe(this) { state ->
             if (selectionMode == SelectionMode.MULTIPLE) {
                 filesAdapter.clearSelection()
             }
 
-            viewBinding.llSortContainer.visibility = when (state) {
+            binding.llSortContainer.visibility = when (state) {
                 is MediaScreenState.AllFiles, is MediaScreenState.FilesInFolder -> View.VISIBLE
                 is MediaScreenState.Folders -> View.GONE
             }
             when (state) {
                 is MediaScreenState.AllFiles -> {
-                    viewBinding.rvFolders.visibility = View.GONE
-                    viewBinding.rvFiles.visibility = View.VISIBLE
+                    binding.rvFolders.visibility = View.GONE
+                    binding.rvFiles.visibility = View.VISIBLE
                     filesAdapter.submitList(viewModel.allFiles.value ?: emptyList())
-                    viewBinding.tabLayout.getTabAt(0)?.select()
+                    binding.tabLayout.getTabAt(0)?.select()
                     updateEmptyViewVisibility(viewModel.allFiles.value?.isEmpty() == true)
                 }
 
                 is MediaScreenState.Folders -> {
-                    viewBinding.rvFiles.visibility = View.GONE
-                    viewBinding.rvFolders.visibility = View.VISIBLE
-                    viewBinding.tabLayout.getTabAt(1)?.select()
+                    binding.rvFiles.visibility = View.GONE
+                    binding.rvFolders.visibility = View.VISIBLE
+                    binding.tabLayout.getTabAt(1)?.select()
                 }
 
                 is MediaScreenState.FilesInFolder -> {
-                    viewBinding.rvFolders.visibility = View.GONE
-                    viewBinding.rvFiles.visibility = View.VISIBLE
+                    binding.rvFolders.visibility = View.GONE
+                    binding.rvFiles.visibility = View.VISIBLE
                     filesAdapter.submitList(emptyList())
                 }
             }
@@ -143,12 +161,12 @@ class SelectMediaActivity : BaseActivity<ActivitySelectMediaBinding>(
                 SortCriteria.DURATION -> getString(R.string.duration)
                 SortCriteria.DATE -> getString(R.string.date)
             }
-            viewBinding.tvSortCriteria.text = getString(R.string.sorted_by, criteriaText)
+            binding.tvSortCriteria.text = getString(R.string.sorted_by, criteriaText)
         }
 
         viewModel.sortOrder.observe(this) { order ->
             val rotationAngle = if (order == SortOrder.ASCENDING) 180f else 0f
-            viewBinding.ivSortDirection.animate()
+            binding.ivSortDirection.animate()
                 .rotation(rotationAngle)
                 .setDuration(300)
                 .start()
@@ -174,18 +192,19 @@ class SelectMediaActivity : BaseActivity<ActivitySelectMediaBinding>(
     }
 
     private fun setupSorting() {
-        viewBinding.llSortContainer.tap {
+        binding.llSortContainer.tap {
             SortDialog(this, viewModel).show()
         }
     }
 
     private fun setupOnClickListener() {
-        viewBinding.btnNext.tap {
+        binding.btnNext.tap {
             val selectedFiles: List<MediaFile> = filesAdapter.getSelectedItems()
             if (selectedFiles.isNotEmpty()) {
                 val totalDuration = calculateTotalDuration(selectedFiles)
 
-                val hasShortFile = selectedFiles.any { it.duration < MIN_SELECTED_MEDIA_DURATION_MS }
+                val hasShortFile =
+                    selectedFiles.any { it.duration < MIN_SELECTED_MEDIA_DURATION_MS }
                 if (hasShortFile) {
                     showToast(getString(R.string.please_select_a_media_file_at_least_5_seconds_long))
                     return@tap
@@ -195,189 +214,192 @@ class SelectMediaActivity : BaseActivity<ActivitySelectMediaBinding>(
                     showToast(getString(R.string.please_select_audio_files_with_a_total_duration_of_up_to_30_minutes))
                     return@tap
                 }
-
-                when (editType) {
-                    EditType.AUDIO_MERGER -> {
-                        val intent = MergerActivity.newIntent(this, selectedFiles)
-                        mergerLauncher.launch(intent)
-                    }
-
-                    EditType.AUDIO_MIXER -> {
-                        val intent =
-                            MixerActivity.newIntent(this, selectedFiles, EditType.AUDIO_MIXER)
-                        mixerLauncher.launch(intent)
-                    }
-
-                    EditType.AUDIO_CONVERTER -> {
-                        val intent = ConfigConvertActivity.newIntent(this, selectedFiles)
-                        convertLauncher.launch(intent)
-                    }
-
-                    else -> {
-                        // No action needed for single selection modes here
-                    }
-                }
-            } else {
-                showToast("No files selected.")
+                //when (editType) {
+//                    EditType.AUDIO_MERGER -> {
+//                        val intent = MergerActivity.newIntent(this, selectedFiles)
+//                        mergerLauncher.launch(intent)
+//                    }
+//
+//                    EditType.AUDIO_MIXER -> {
+//                        val intent =
+//                            MixerActivity.newIntent(this, selectedFiles, EditType.AUDIO_MIXER)
+//                        mixerLauncher.launch(intent)
+//                    }
+//
+//                    EditType.AUDIO_CONVERTER -> {
+//                        val intent = ConfigConvertActivity.newIntent(this, selectedFiles)
+//                        convertLauncher.launch(intent)
+//                    }
+//
+//                    else -> {
+//                        // No action needed for single selection modes here
+//                    }
+//                }
+//            } else {
+//                showToast("No files selected.")
+//            }
             }
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun setupAdapters() {
-        filesAdapter = MediaFileAdapter()
-        filesAdapter.setSelectionMode(selectionMode)
-        filesAdapter.setEditType(editType)
-        viewBinding.rvFiles.adapter = filesAdapter
-        viewBinding.rvFiles.layoutManager = LinearLayoutManager(this)
+        @SuppressLint("NotifyDataSetChanged")
+        private fun setupAdapters() {
+            filesAdapter = MediaFileAdapter()
+            filesAdapter.setSelectionMode(selectionMode)
+            filesAdapter.setEditType(editType)
+            binding.rvFiles.adapter = filesAdapter
+            binding.rvFiles.layoutManager = LinearLayoutManager(this)
 
-        if (selectionMode == SelectionMode.SINGLE) {
-            filesAdapter.setOnSingleItemSelected { mediaFile ->
-                if (mediaFile.duration < MIN_SELECTED_MEDIA_DURATION_MS) {
+            if (selectionMode == SelectionMode.SINGLE) {
+                filesAdapter.setOnSingleItemSelected { mediaFile ->
+                    if (mediaFile.duration < MIN_SELECTED_MEDIA_DURATION_MS) {
+                        showToast(getString(R.string.please_select_a_media_file_at_least_5_seconds_long))
+                        return@setOnSingleItemSelected
+                    }
+                    if (mediaFile.duration > MAX_TOTAL_SELECTION_DURATION_MS) {
+                        showToast(getString(R.string.please_select_audio_files_with_a_total_duration_of_up_to_30_minutes))
+                        return@setOnSingleItemSelected
+                    }
+                    onMediaItemClick(editType, mediaFile)
+                }
+            } else {
+                filesAdapter.setOnMultiSelectionChanged { selectedFiles ->
+                    if (selectedFiles.isNotEmpty()) { // Your requirement for the bottom bar
+                        binding.selectionContainer.visibility = View.VISIBLE
+                        binding.tvSelectionCount.text =
+                            resources.getQuantityString(
+                                R.plurals.files_selected,
+                                selectedFiles.size,
+                                selectedFiles.size
+                            )
+                    } else {
+                        binding.selectionContainer.visibility = View.GONE
+                    }
+                }
+                filesAdapter.setOnLimitReached {
+                    showToast("Max file selected")
+                }
+
+                filesAdapter.setOnLessThanLimitReached {
                     showToast(getString(R.string.please_select_a_media_file_at_least_5_seconds_long))
-                    return@setOnSingleItemSelected
                 }
-                if (mediaFile.duration > MAX_TOTAL_SELECTION_DURATION_MS) {
-                    showToast(getString(R.string.please_select_audio_files_with_a_total_duration_of_up_to_30_minutes))
-                    return@setOnSingleItemSelected
-                }
-                onMediaItemClick(editType, mediaFile)
             }
-        } else {
-            filesAdapter.setOnMultiSelectionChanged { selectedFiles ->
-                if (selectedFiles.isNotEmpty()) { // Your requirement for the bottom bar
-                    viewBinding.selectionContainer.visibility = View.VISIBLE
-                    viewBinding.tvSelectionCount.text =
-                        resources.getQuantityString(
-                            R.plurals.files_selected,
-                            selectedFiles.size,
-                            selectedFiles.size
-                        )
+
+            foldersAdapter = MediaFolderAdapter { folder ->
+                filesAdapter.setItems(emptyList())
+                filesAdapter.notifyDataSetChanged()
+                viewModel.onFolderClicked(folder)
+            }
+
+            binding.rvFolders.apply {
+                adapter = foldersAdapter
+                layoutManager = LinearLayoutManager(this@SelectMediaActivity)
+            }
+        }
+
+        private fun onMediaItemClick(editType: EditType, mediaFile: MediaFile) {
+            when (editType) {
+                EditType.NOTHING -> {}
+                EditType.AUDIO_CUTTER -> {
+//                val intent = CutAudioActivity.newIntent(this, mediaFile, EditType.AUDIO_CUTTER)
+//                startActivity(intent)
+                }
+
+                EditType.VIDEO_TO_AUDIO -> {}
+                EditType.VOICE_CHANGE -> {}
+                EditType.TEXT_TO_AUDIO -> {}
+                EditType.AUDIO_VOLUME -> {
+//                val intent = AudioBoosterActivity.newIntent(this, mediaFile)
+//                convertLauncher.launch(intent)
+                }
+
+                EditType.AUDIO_MERGER -> {}
+                EditType.AUDIO_MIXER -> {}
+
+                EditType.AUDIO_CONVERTER -> {}
+                EditType.AUDIO_SPEED -> {
+                    val intent = EditSpeedAudioActivity.newIntent(this, mediaFile)
+                    startActivity(intent)
+                }
+
+                EditType.AUDIO_EFFECT_CHANGER -> {
+//                    val bundleModel = BundleModel(
+//                        soundPath = Utils.getRealPathFromURI(
+//                            this@SelectMediaActivity,
+//                            mediaFile.uri, mediaFile.name, mediaFile.format
+//                        ) ?: ""
+//                    )
+//                    val intent = Intent(this, VoiceChangeActivity::class.java)
+//                    intent.putExtra(Constants.BUNDLE_PATH_SOUND, bundleModel)
+//                    intent.putExtra(Constants.EXTRA_MEDIA_FILE, mediaFile)
+//                    startActivity(intent)
+                }
+            }
+        }
+
+            private fun setupTabs() {
+                binding.tabLayout.addOnTabSelectedListener(object :
+                    TabLayout.OnTabSelectedListener {
+                    override fun onTabSelected(tab: TabLayout.Tab?) {
+                        tab?.position?.let { viewModel.onTabSelected(it) }
+                    }
+
+                    override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                    override fun onTabReselected(tab: TabLayout.Tab?) {}
+                })
+            }
+
+            private fun checkAndRequestPermissions() {
+                val permissionsToRequest =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        when (mediaType) {
+                            MediaType.AUDIO -> arrayOf(Manifest.permission.READ_MEDIA_AUDIO)
+                            MediaType.VIDEO -> arrayOf(Manifest.permission.READ_MEDIA_VIDEO)
+                        }
+                    } else {
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    }
+
+                if (permissionsToRequest.all {
+                        ContextCompat.checkSelfPermission(
+                            this,
+                            it
+                        ) == PackageManager.PERMISSION_GRANTED
+                    }) {
+                    loadInitialData()
                 } else {
-                    viewBinding.selectionContainer.visibility = View.GONE
+                    requestPermissionLauncher.launch(permissionsToRequest)
                 }
             }
-            filesAdapter.setOnLimitReached {
-                showToast("Max file selected")
+
+            private fun handleCustomBackButton() {
+                binding.toolbar.ivLeftIcon.tap {
+                    if (viewModel.uiState.value is MediaScreenState.FilesInFolder) {
+                        viewModel.onBackPressed()
+                    } else {
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
             }
 
-            filesAdapter.setOnLessThanLimitReached{
-                showToast(getString(R.string.please_select_a_media_file_at_least_5_seconds_long))
+            private fun loadInitialData() {
+                viewModel.loadInitialData()
             }
+
+            private fun updateEmptyViewVisibility(isEmpty: Boolean) {
+                binding.viewEmptyItem.root.visibility = if (isEmpty) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            }
+            companion object {
+                fun newIntent(context: Context, mediaType: MediaType, editType: EditType): Intent {
+                    return Intent(context, SelectMediaActivity::class.java).apply {
+                        putExtra(EXTRA_MEDIA_TYPE, mediaType)
+                        putExtra(EDIT_TYPE, editType)
+                    }
+                }
+            }
+
         }
-
-        foldersAdapter = MediaFolderAdapter { folder ->
-            filesAdapter.setItems(emptyList())
-            filesAdapter.notifyDataSetChanged()
-            viewModel.onFolderClicked(folder)
-        }
-
-        viewBinding.rvFolders.apply {
-            adapter = foldersAdapter
-            layoutManager = LinearLayoutManager(this@SelectMediaActivity)
-        }
-    }
-
-    private fun onMediaItemClick(editType: EditType, mediaFile: MediaFile) {
-        when (editType) {
-            EditType.NOTHING -> {}
-            EditType.AUDIO_CUTTER -> {
-                val intent = CutAudioActivity.newIntent(this, mediaFile, EditType.AUDIO_CUTTER)
-                startActivity(intent)
-            }
-
-            EditType.VIDEO_TO_AUDIO -> {}
-            EditType.VOICE_CHANGE -> {}
-            EditType.TEXT_TO_AUDIO -> {}
-            EditType.AUDIO_VOLUME -> {
-                val intent = AudioBoosterActivity.newIntent(this, mediaFile)
-                convertLauncher.launch(intent)
-            }
-
-            EditType.AUDIO_MERGER -> {}
-            EditType.AUDIO_MIXER -> {}
-
-            EditType.AUDIO_CONVERTER -> {}
-            EditType.AUDIO_SPEED -> {
-                val intent = EditSpeedAudioActivity.newIntent(this, mediaFile)
-                startActivity(intent)
-            }
-
-            EditType.AUDIO_EFFECT_CHANGER -> {
-                val bundleModel = BundleModel(
-                    soundPath = Utils.getRealPathFromURI(
-                        this@SelectMediaActivity,
-                        mediaFile.uri, mediaFile.name, mediaFile.format
-                    ) ?: ""
-                )
-                val intent = Intent(this, VoiceChangeActivity::class.java)
-                intent.putExtra(Constants.BUNDLE_PATH_SOUND, bundleModel)
-                intent.putExtra(Constants.EXTRA_MEDIA_FILE, mediaFile)
-                startActivity(intent)
-            }
-        }
-    }
-
-    private fun setupTabs() {
-        viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.position?.let { viewModel.onTabSelected(it) }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-    }
-
-    private fun checkAndRequestPermissions() {
-        val permissionsToRequest = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when (mediaType) {
-                MediaType.AUDIO -> arrayOf(Manifest.permission.READ_MEDIA_AUDIO)
-                MediaType.VIDEO -> arrayOf(Manifest.permission.READ_MEDIA_VIDEO)
-            }
-        } else {
-            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-
-        if (permissionsToRequest.all {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    it
-                ) == PackageManager.PERMISSION_GRANTED
-            }) {
-            loadInitialData()
-        } else {
-            requestPermissionLauncher.launch(permissionsToRequest)
-        }
-    }
-
-    private fun handleCustomBackButton() {
-        viewBinding.toolbar.ivLeftIcon.tap {
-            if (viewModel.uiState.value is MediaScreenState.FilesInFolder) {
-                viewModel.onBackPressed()
-            } else {
-                onBackPressedDispatcher.onBackPressed()
-            }
-        }
-    }
-
-    private fun loadInitialData() {
-        viewModel.loadInitialData()
-    }
-
-    private fun updateEmptyViewVisibility(isEmpty: Boolean) {
-        viewBinding.viewEmptyItem.root.visibility = if (isEmpty) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-    }
-    companion object {
-        fun newIntent(context: Context, mediaType: MediaType, editType: EditType): Intent {
-            return Intent(context, SelectMediaActivity::class.java).apply {
-                putExtra(EXTRA_MEDIA_TYPE, mediaType)
-                putExtra(EDIT_TYPE, editType)
-            }
-        }
-    }
-}
