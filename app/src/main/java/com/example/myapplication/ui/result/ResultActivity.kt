@@ -34,6 +34,7 @@ import com.example.myapplication.ui.dialog.DialogHelper
 import com.example.myapplication.ui.dialog.DialogHelper.showPopupResult
 import com.example.myapplication.ui.dialog.DialogHelper.showRenameDialog
 import com.example.myapplication.ui.home.HomeActivity
+import com.example.myapplication.ui.main.MainActivity
 import com.example.myapplication.utils.const
 import com.example.myapplication.utils.const.EXTRA_MEDIA_FILE
 import com.example.myapplication.utils.const.IS_FROM_HISTORY
@@ -297,7 +298,7 @@ class ResultActivity :
     }
 
     private fun navigationToHome() {
-        val intent = Intent(this@ResultActivity, HomeActivity::class.java)
+        val intent = Intent(this@ResultActivity, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
