@@ -42,20 +42,21 @@ class LanguageSettingActivity :
 
         val linearLayoutManager = LinearLayoutManager(this)
 
-        for (i in listLang.indices) {
-            val languageModel = listLang[i]
-            if (languageModel.code.contains(SystemUtil.getPreLanguage(this).toString())) {
-                listLanguage.remove(languageModel)
-                listLanguage.add(0, languageModel)
-                break
+        val savedLang = SystemUtil.getCurrentLanguage(this)
+        if (savedLang != null) {
+            val selected = listLanguage.firstOrNull { it.code == savedLang }
+            if (selected != null) {
+                listLanguage.remove(selected)
+                listLanguage.add(0, selected)
             }
         }
-        languageAdapter =
-            LanguageAdapter(this, listLanguage, object : LanguageAdapter.OnItemClickListener {
-                override fun onItemClick(position: Int) {
-                    lang = listLanguage[position].code
-                }
 
+
+        languageAdapter =
+            LanguageAdapter( listLanguage, object : LanguageAdapter.OnItemClickListener {
+                override fun onItemClick(languageTag: String) {
+                    lang = languageTag
+                }
             })
         binding.rvLanguage.layoutManager = linearLayoutManager
         binding.rvLanguage.adapter = languageAdapter
@@ -81,7 +82,7 @@ class LanguageSettingActivity :
             )
 
             ivRightIcon1.tap {
-                SystemUtil.saveLocale(this@LanguageSettingActivity, lang)
+                SystemUtil.changeLanguage(this@LanguageSettingActivity, lang)
                 nextActivityProcess()
             }
         }

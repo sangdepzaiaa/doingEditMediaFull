@@ -9,9 +9,11 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.net.Uri
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
 import androidx.core.content.edit
 import androidx.core.net.toUri
+import androidx.core.os.LocaleListCompat
 import com.example.myapplication.data.enumm.MediaFile
 import com.example.myapplication.data.enumm.MediaType
 import com.example.myapplication.utils.const.KEY_LANGUAGE
@@ -23,57 +25,133 @@ import java.util.Locale
 import kotlin.io.copyTo
 
 object SystemUtil {
-    private var myLocale: Locale? = null
+    // cách mới : app -> android -> string
+    private const val PREF_NAME = "app_prefs"
+    private const val KEY_LANGUAGE = "KEY_LANGUAGE"
 
-    private const val KEY_REGION_NAME = "KEY_REGION_NAME"
-
-    // Lưu ngôn ngữ đã cài đặt
-    fun saveLocale(context: Context, lang: String?) {
-        setPreLanguage(context, lang)
+    /**
+     * Gọi trong Application.onCreate()
+     */
+    fun applySavedLocale(context: Context) {
+        val languageTag = getSavedLanguage(context) ?: return
+        applyLocale(languageTag)
     }
 
-    // Load lại ngôn ngữ đã lưu và thay đổi chúng
-    fun setLocale(context: Context) {
-        val language = getPreLanguage(context)
-        if (language == "") {
-            val config = Configuration()
-            val locale = Locale.getDefault()
-            Locale.setDefault(locale)
-            config.locale = locale
-            context.resources
-                .updateConfiguration(config, context.resources.displayMetrics)
-        } else {
-            changeLang(language, context)
-        }
+    /**
+     * Gọi khi user confirm đổi ngôn ngữ
+     */
+    fun changeLanguage(context: Context, languageTag: String) {
+        saveLanguage(context, languageTag)
+        applyLocale(languageTag)
     }
 
-    // method phục vụ cho việc thay đổi ngôn ngữ.
-    fun changeLang(lang: String?, context: Context) {
-        if (lang.equals("", ignoreCase = true)) return
-        myLocale = Locale(lang)
-        saveLocale(context, lang)
-        if (myLocale != null) {
-            Locale.setDefault(myLocale!!)
-        }
-        val config = Configuration()
-        config.locale = myLocale
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+    /**
+     * PUBLIC – dùng cho UI (sort list, set selected)
+     */
+    fun getCurrentLanguage(context: Context): String? {
+        return getSavedLanguage(context)
     }
 
-    fun getPreLanguage(mContext: Context): String? {
-        val preferences = mContext.getSharedPreferences("data", Context.MODE_PRIVATE)
-        return preferences.getString(KEY_LANGUAGE, "")
+    // ================= PRIVATE =================
+    //LocaleListCompat.tạo một danh sách các ngôn ngữ từ mã ngôn ngữ : list<String>
+    // "vi"        → Vietnamese
+    //"en-US"     → English (United States)
+    //"fr-FR"     → French (France)
+    //forLanguageTags(languageTag) : chuyển list<String> thành LocaleListCompat : Locale("vi")
+    //có thể forLanguageTags("vi,en-US") dùng vi , nếu không có thì dùng en-US
+    //languageTag = "" -> LocaleListCompat.getEmptyLocaleList()
+    //
+    // AppCompatDelegate.trung tâm điều khiển các hành vi toàn app của AppCompat:
+    // Dark / Light mode
+    //🌐 Ngôn ngữ app (Android 13-
+    //Theme compatibili
+    //setApplicationLocales(locales): set ngôn ngữ toàn app:
+    // Reload resource:values-en/strings.xml,layout, plurals
+
+    private fun applyLocale(languageTag: String) {
+        val locales = LocaleListCompat.forLanguageTags(languageTag)
+        AppCompatDelegate.setApplicationLocales(locales)
     }
 
-    fun setPreLanguage(context: Context, language: String?) {
-        if (language == null || language == "") {
-        } else {
-            val preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
-            preferences.edit {
-                putString(KEY_LANGUAGE, language)
-            }
-        }
+    private fun saveLanguage(context: Context, languageTag: String) {
+        context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            .edit()
+            .putString(KEY_LANGUAGE, languageTag)
+            .apply()
     }
+
+    private fun getSavedLanguage(context: Context): String? {
+        return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+            .getString(KEY_LANGUAGE, null)
+    }
+
+
+    // cách cũ: app -> string
+//    private var myLocale: Locale? = null
+//
+//    private const val KEY_REGION_NAME = "KEY_REGION_NAME"
+//
+//    // Lưu ngôn ngữ đã cài đặt
+//    fun saveLocale(context: Context, lang: String?) {
+//        setPreLanguage(context, lang)
+//    }
+//
+//    // Load lại ngôn ngữ đã lưu và thay đổi chúng
+//    // val config = Configuration() // cấu hình Ui: ngôn ngữ, layout, font,..
+//    // val locale = Locale.getDefault() // lấy ngôn ngữ mặc định của hệ thống
+//    //Locale.setDefault(locale) // đặt và lưu  ngôn ngữ mặc định của he thống
+//    // config.locale = locale // gán ngôn ngữ vào cấu hình cho ứng dụng
+//    //   context.resources
+//    //                .updateConfiguration(config, context.resources.displayMetrics)
+//    //                : thay đổi cấu hình của ứng dụng với ngôn ngữ mới
+//    //
+//    fun setLocale(context: Context) {
+//        val language = getPreLanguage(context)
+//        if (language == "") {
+//            val config = Configuration()
+//            val locale = Locale.getDefault()
+//            Locale.setDefault(locale)
+//            config.locale = locale
+//            context.resources
+//                .updateConfiguration(config, context.resources.displayMetrics)
+//        } else {
+//            changeLang(language, context)
+//        }
+//    }
+//
+//    // method phục vụ cho việc thay đổi ngôn ngữ.
+//    //Locale("en "): tạo đối tượng Locale với mã ngôn ngữ "en"
+//    // Locale.setDefault(myLocale): đặt ngôn ngữ mặc định của ứng dụng thành myLocale
+//    // config.locale = myLocale: gán ngôn ngữ mới vào cấu hình của ứng dụng
+//    // context.resources.updateConfiguration(config, context.resources.displayMetrics):
+//    // cập nhật cấu hình của ứng dụng với ngôn ngữ mới
+//    fun changeLang(lang: String?, context: Context) {
+//       // if (lang.equals("", ignoreCase = true)) return
+//        if (lang.isNullOrBlank()) return
+//        myLocale = Locale(lang)
+//        saveLocale(context, lang)
+//        if (myLocale != null) {
+//            Locale.setDefault(myLocale)
+//        }
+//        val config = Configuration()
+//        config.locale = myLocale
+//        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+//    }
+//
+//    fun getPreLanguage(mContext: Context): String? {
+//        val preferences = mContext.getSharedPreferences("data", Context.MODE_PRIVATE)
+//        return preferences.getString(KEY_LANGUAGE, "")
+//    }
+//
+//    fun setPreLanguage(context: Context, language: String?) {
+//        if (language == null || language == "") {
+//        } else {
+//            val preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
+//            preferences.edit {
+//                putString(KEY_LANGUAGE, language)
+//            }
+//        }
+//    }
 
     fun setActive(context: Context, value: Boolean) {
         val sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
@@ -151,17 +229,17 @@ object SystemUtil {
         }
     }
 
-    fun saveRegionName(context: Context, regionName: String?) {
-        val preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
-        preferences.edit {
-            putString(KEY_REGION_NAME, regionName ?: "")
-        }
-    }
-
-    fun getRegionName(context: Context): String? {
-        val preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
-        return preferences.getString(KEY_REGION_NAME, "")
-    }
+//    fun saveRegionName(context: Context, regionName: String?) {
+//        val preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
+//        preferences.edit {
+//            putString(KEY_REGION_NAME, regionName ?: "")
+//        }
+//    }
+//
+//    fun getRegionName(context: Context): String? {
+//        val preferences = context.getSharedPreferences("data", Context.MODE_PRIVATE)
+//        return preferences.getString(KEY_REGION_NAME, "")
+//    }
 
     // --- Helper: convert content:// -> File
     fun uriToFile(context: Context, uri: Uri, fileName: String): File? {

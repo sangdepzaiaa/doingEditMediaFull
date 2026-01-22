@@ -1,23 +1,18 @@
 package com.example.myapplication.ui.home
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.BuildConfig
-
 import com.example.myapplication.R
 import com.example.myapplication.base.BaseActivity
 import com.example.myapplication.data.enumm.FaceDetectionResult
@@ -40,7 +35,7 @@ import java.io.File
 class HomeActivity : BaseActivity<ActivityHomeBinding>(
     inflater = ActivityHomeBinding::inflate
 ) {
-    var tempFile: File? = null
+
     var currentPhoto: File? = null
     var currentPhoto2: File? = null
     private lateinit var adapter: HomeAdapter
@@ -58,39 +53,42 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
         }
     }
 
-    val pickContent = registerForActivityResult(
+    var isChooseTypePhoto = true
+
+    var tempFile: File ?= null
+    var photoBottomSheet: DialogTypeChoosePhoto ? = null
+
+    val getContent = registerForActivityResult(
         ActivityResultContracts.GetContent()
-    ) { uri ->
-        uri?.let { handleUri(it) }
+    ){uri ->
+        uri?.let{ handleUri(it) }
     }
 
     val pickVisual = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
-    ) { uri ->
-        uri?.let { handleUri(it) }
+    ){uri ->
+        uri?.let{ handleUri(it) }
     }
 
-    val takePhoto = registerForActivityResult(
+    val takeCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success) {
-            tempFile?.let { checkFace(it) }
-        } else {
-            tempFile?.delete()
-            tempFile = null
+    ){success ->
+            if (success){
+                tempFile?.let { checkFace(it) }
+            }else{
+                tempFile?.delete()
+                tempFile = null
+            }
         }
-    }
 
-    var isChooseTypePhoto = true
-    var photoBottomSheet: DialogTypeChoosePhoto? = null
-    fun showChooseTypePhoto() {
+    fun showChooseTypePhoto(){
         photoBottomSheet?.dismissAllowingStateLoss()
         photoBottomSheet = null
 
-        photoBottomSheet = DialogTypeChoosePhoto(object : DialogTypeChoosePhoto.OnSelectedListener {
+        photoBottomSheet = DialogTypeChoosePhoto(object  : DialogTypeChoosePhoto.OnSelectedListener{
             override fun onPhotoSelected() {
                 photoBottomSheet = null
-                openPickPhoto()
+                openPhoto()
             }
 
             override fun onCameraSelected() {
@@ -100,44 +98,41 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>(
 
         })
 
-        if (!isDestroyed && !isFinishing && supportFragmentManager.isStateSaved.not()) {
-            photoBottomSheet?.show(supportFragmentManager, "ChoosePhotoDialog")
+        if (!isFinishing && !isDestroyed && supportFragmentManager.isStateSaved.not()){
+            photoBottomSheet?.show(supportFragmentManager,"PhotoBottomSheet")
         }
     }
 
-    fun openPickPhoto() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+    fun openPhoto(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             pickVisual.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-        } else {
-            pickContent.launch("image/*")
+        }else{
+            getContent.launch("image/*")
         }
     }
 
-    fun hasPermission(): Boolean =
-        ContextCompat.checkSelfPermission(this@HomeActivity, Manifest.permission.CAMERA) ==
+    fun hasPermissionCamera(): Boolean =
+        ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
                 PackageManager.PERMISSION_GRANTED
 
-    fun openCamera() {
-        if (!hasPermission()) {
-            startActivity(Intent(this, PermissionActivity::class.java))
+    fun openCamera(){
+        if (!hasPermissionCamera()){
+           startActivity(Intent(this, PermissionActivity::class.java))
             return
         }
-        openCameraInternal()
+        openCameraDetail()
     }
 
-    fun openCameraInternal() {
-        tempFile = File(cacheDir, "camera_${System.currentTimeMillis()}.jpg")
-        val uri =
-            FileProvider.getUriForFile(this, "${BuildConfig.APPLICATION_ID}", tempFile ?: return)
-        takePhoto
+    fun openCameraDetail(){
+        tempFile = File(cacheDir,"camara_${System.currentTimeMillis()}.jpg")
+        val uri = FileProvider.getUriForFile(this, "${packageName}.provider", tempFile?: return)
+        takeCamera.launch(uri)
     }
 
-    fun handleUri(uri: Uri) {
-        var file =
-            uri.copyToCacheFile(this@HomeActivity, "picked_photo_${System.currentTimeMillis()}.jpg")
+    fun handleUri(uri: Uri){
+        val file = uri.copyToCacheFile(this, "selected_${System.currentTimeMillis()}.jpg")
         file?.let { checkFace(it) }
     }
-
     fun checkFace(file: File) {
         // file không thể null ở đây (do đã kiểm tra trước khi gọi), nhưng vẫn giữ an toàn
         if (!file.exists()) {

@@ -7,6 +7,7 @@ import androidx.core.content.edit
 
 object SharePreUtils {
     private const val PREFS = "PREFS"
+    private const val RATE = "RATE"
 
     fun pref(context: Context): SharedPreferences{
         return context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -22,14 +23,14 @@ object SharePreUtils {
 
 
     fun forceRated(context: Context) {
-        val pre = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val pre = context.getSharedPreferences(RATE, Context.MODE_PRIVATE)
         pre.edit(commit = true) {
             putBoolean("rated", true)
         }
     }
 
     fun isRated(context: Context): Boolean {
-        val pre = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val pre = context.getSharedPreferences(RATE, Context.MODE_PRIVATE)
         return pre.getBoolean("rated", false)
     }
 }

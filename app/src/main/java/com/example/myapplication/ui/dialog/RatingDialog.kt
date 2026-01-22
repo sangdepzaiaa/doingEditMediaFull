@@ -23,14 +23,14 @@ class RatingDialog(context: Context) :
     override fun initView() {
         super.initView()
         setContentView(binding.root)
-        val attributes = window!!.attributes
-        attributes.width = WindowManager.LayoutParams.MATCH_PARENT
-        attributes.height = WindowManager.LayoutParams.WRAP_CONTENT
+        val attributes = window?.attributes
+        attributes?.width = WindowManager.LayoutParams.MATCH_PARENT
+        attributes?.height = WindowManager.LayoutParams.WRAP_CONTENT
         window?.let {
             it.attributes = attributes
-            it.setSoftInputMode(16)
+            it.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
-        binding.ratingBar.rating = 5.0f
+        binding.ratingBar.rating = 5.0f  // 5 ngôi sao được chọn , tô vàng
         onclick()
         changeRating()
     }
@@ -51,19 +51,13 @@ class RatingDialog(context: Context) :
         this.onPress = onPress
     }
 
+    // rating : số sao chọn
+    //fromUser : người dùng có thay đổi hay không
     private fun changeRating() {
-        binding.ratingBar.onRatingBarChangeListener =
-            OnRatingBarChangeListener { _: RatingBar?, _: Float, _: Boolean ->
-                val getRating = binding.ratingBar.rating.toString()
-                s = when (getRating) {
-                    "1.0" -> 1
-                    "2.0" -> 2
-                    "3.0" -> 3
-                    "4.0" -> 4
-                    "5.0" -> 5
-                    else -> 0
-                }
-            }
+        binding.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
+            if (!fromUser) return@setOnRatingBarChangeListener
+            s = rating.toInt()
+        }
     }
 
     private fun onclick() {

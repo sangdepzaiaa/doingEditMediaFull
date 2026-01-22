@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.myapplication.di.databaseModule
 import com.example.myapplication.di.repositoryModule
 import com.example.myapplication.di.viewModelModule
+import com.example.myapplication.utils.SystemUtil
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
@@ -16,6 +17,8 @@ class MyApplication: Application(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
+        SystemUtil.applySavedLocale(this@MyApplication)
+
         val modules = listOf(
 //            networkModule,
             viewModelModule,

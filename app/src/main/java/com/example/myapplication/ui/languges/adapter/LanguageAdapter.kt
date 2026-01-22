@@ -10,11 +10,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.data.model.LanguageModel
+import com.example.myapplication.databinding.ItemLanguagesBinding
 import com.example.myapplication.utils.SystemUtil
 import com.example.myapplication.utils.tap
 
+
+//position : vị trí của item khi được bind
+//adapterPosition : vị trí hiện tại của item trong adapter,
+//notifyItemChanged gọi lại onBindViewHolder, vẽ lại ui item đó
+//RecyclerView bỏ qua position không hợp lệ : ví dụ -1
 class LanguageAdapter(
-    private val context: Context,
     private var list: List<LanguageModel>,
     private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<LanguageAdapter.LanguageHolder>() {
@@ -25,8 +30,7 @@ class LanguageAdapter(
         parent: ViewGroup, viewType: Int
     ): LanguageHolder {
         return LanguageHolder(
-            LayoutInflater.from(context).inflate(R.layout.item_languages, parent, false)
-        )
+            ItemLanguagesBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: LanguageHolder, position: Int) {
@@ -44,13 +48,20 @@ class LanguageAdapter(
         holder.itemView.tap {
             // Lưu vị trí item trước đó
             previousSelectedItemPosition = selectedItemPosition
+
             // Cập nhật vị trí item mới
-            selectedItemPosition = holder.adapterPosition
+            //selectedItemPosition = holder.adapterPosition
+            val pos = holder.bindingAdapterPosition
+            if (pos == RecyclerView.NO_POSITION) return@tap
+            selectedItemPosition = pos
+
             // Thông báo thay đổi cho item trước đó và item mới
-            notifyItemChanged(previousSelectedItemPosition)
+            if (previousSelectedItemPosition != -1) {
+                notifyItemChanged(previousSelectedItemPosition)
+            }
             notifyItemChanged(selectedItemPosition)
-            itemClickListener.onItemClick(position)
-            SystemUtil.setLocale(context)
+            itemClickListener.onItemClick(list[selectedItemPosition].code)
+            // SystemUtil.setLocale(context)
         }
     }
 
@@ -58,13 +69,14 @@ class LanguageAdapter(
         return list.size
     }
 
-    class LanguageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ivLanguage: ImageView = itemView.findViewById(R.id.iv_language)
-        val tvLanguage: TextView = itemView.findViewById(R.id.tv_language)
+    class LanguageHolder(binding : ItemLanguagesBinding) : RecyclerView.ViewHolder(binding.root) {
+        val ivLanguage = binding.ivLanguage
+        val tvLanguage = binding.tvLanguage
     }
 
 
     interface OnItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(languageTag: String)
     }
+
 }

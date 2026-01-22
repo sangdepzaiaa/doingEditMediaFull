@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path
-        name="external"
-        path="." />
-    <external-files-path
-        name="external_files"
-        path="." />
+
+    <!-- Camera output (TakePicture) -->
     <cache-path
-        name="cache"
+        name="camera_cache"
         path="." />
-    <cache-path
-        name="images"
-        path="images/" />
-    <external-cache-path
-        name="external_cache"
-        path="." />
-    <files-path
-        name="files"
-        path="." />
-    <external-files-path name="my_images" path="Pictures" />
-    <cache-path
-        name="shared_image"
-        path="." />
+
+    <!-- Internal app files (share file nội bộ) -->
     <files-path
         name="internal_files"
         path="." />
+
+    <!-- External app-specific files (share image/video nếu cần) -->
+    <external-files-path
+        name="external_files"
+        path="." />
+
 </paths>

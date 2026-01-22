@@ -60,7 +60,7 @@ class EditSpeedAudioActivity :
         setupSaveButton()
         setupSeekBarTime()
     }
-
+//substringBeforeLast : get string trước dấu .
     private fun initInfoMedia(mediaFile: MediaFile?) {
         outputFileName = mediaFile?.name?.substringBeforeLast('.') ?: ""
         binding.txvnamefile.text = mediaFile?.name

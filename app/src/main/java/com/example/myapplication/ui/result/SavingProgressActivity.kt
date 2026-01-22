@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.result
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -20,6 +21,7 @@ import com.example.myapplication.data.repository.MediaFileRepository
 import com.example.myapplication.databinding.ActivitySavingProgressBinding
 import com.example.myapplication.ui.dialog.DialogHelper
 import com.example.myapplication.ui.history.MediaFileAdapter
+import com.example.myapplication.ui.speed_audio.FileUtils
 import com.example.myapplication.ui.video_to_audio.result.ResultVideoToAudioActivity
 import com.example.myapplication.ui.video_to_audio.video_to_audio.VideoItem
 import com.example.myapplication.utils.MediaScanner
@@ -36,6 +38,7 @@ import com.example.myapplication.utils.gone
 import com.example.myapplication.utils.tap
 import com.example.myapplication.utils.toMediaEntry
 import com.example.myapplication.utils.visible
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -48,7 +51,6 @@ import kotlin.getValue
 @SuppressLint("SetTextI18n")
 class SavingProgressActivity :
     BaseActivity<ActivitySavingProgressBinding>(ActivitySavingProgressBinding::inflate) {
-
     companion object {
 
         fun newConvertIntent(
@@ -63,9 +65,6 @@ class SavingProgressActivity :
                 putExtra(EXTRA_FORMAT, format.name)
             }
         }
-
-
-
         fun newSpeedIntent(
             context: Context,
             speed: Float
@@ -110,7 +109,6 @@ class SavingProgressActivity :
             isSpeedChange -> handleSpeedConversion()
         }
     }
-
 
     private fun handleVideoConversion() {
         val videos = intent.getParcelableArrayListCompat<VideoItem>(EXTRA_VIDEOS)
@@ -285,8 +283,11 @@ class SavingProgressActivity :
         finish()
     }
 
+//    Cả hai đều là đường dẫn tuyệt đối.
+//    inputPath → file gốc (thường trong thư mục chung của máy).
+//    tempFile.absolutePath → file tạm/output (thường trong thư mục riêng của app).
     private fun handleSpeedConversion() {
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val results =
                     intent.getParcelableArrayListCompat<MediaFile>(EXTRA_RESULTS) ?: emptyList()
@@ -299,7 +300,7 @@ class SavingProgressActivity :
                     extension = mediaFile.format?.value ?: FormatType.MP3.value
                 )
 
-                val inputPath = com.example.myapplication.ui.speed_audio.FileUtils.getPath(
+                val inputPath = FileUtils.getPath(
                     this@SavingProgressActivity,
                     mediaFile.uri
                 )
@@ -312,11 +313,23 @@ class SavingProgressActivity :
                     FFmpegKit.executeAsync(
                         "-i \"$inputPath\" -filter:a atempo=$speed -vn \"${tempFile.absolutePath}\"",
                         { session ->
-                            continuation.resume(session) {
+                            //                continuation.resume(session) {
+//                    if (tempFile.exists())   tempFile.delete()
+//                }
+                            continuation.resumeWith(Result.success(session))
+                            continuation.invokeOnCancellation {
                                 if (tempFile.exists()) tempFile.delete()
+                                lifecycleScope.launch(Dispatchers.Main) {
+                                    Toast.makeText(
+                                        this@SavingProgressActivity,
+                                        getString(R.string.error_occurred_generic),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    finish()
+                                }
                             }
                         },
-                        { log -> /* Handle logging */ },
+                        { log -> println("FFmpeg log: ${log.message}") },
                         { statistics ->
                             val timeInMs = statistics.time
                             if (duration > 0) {
@@ -324,7 +337,7 @@ class SavingProgressActivity :
                                     ((timeInMs * 100) / duration).toInt().coerceIn(0, 100)
                                 if (progress != lastProgress) {
                                     lastProgress = progress
-                                    runOnUiThread {
+                                    lifecycleScope.launch(Dispatchers.Main) {
                                         updateProgress(progress)
                                     }
                                 }
@@ -372,8 +385,6 @@ class SavingProgressActivity :
             }
         }
     }
-
-
 
     private fun getLocaleFromLanguage(name: String): Locale {
         return when (name) {

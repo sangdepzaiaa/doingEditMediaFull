@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment.STYLE_NORMAL
 import com.example.myapplication.R
 import com.example.myapplication.base.BaseBottomSheet
@@ -33,12 +34,12 @@ class DialogFeedback : BaseBottomSheet<DialogFeedBackBinding>(
                     putExtra(Intent.EXTRA_EMAIL, arrayOf("v1studio.0225@gmail.com"))
                     putExtra(Intent.EXTRA_SUBJECT, subject)
                     putExtra(Intent.EXTRA_TEXT, yourFeedback)
+                    setPackage("com.google.android.gm")
                 }
-                emailIntent.setPackage("com.google.android.gm")
                 try {
-
                     startActivity(emailIntent)
                 } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Gmail app is not installed.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
